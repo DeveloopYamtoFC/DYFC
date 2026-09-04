@@ -1,0 +1,1575 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap");
+
+:root {
+  --black: #050505;
+  --black-light: #171717;
+  --red: #e10600;
+  --dark-red: #a80000;
+  --white: #f7f7f7;
+  --gray: #747474;
+  --light-gray: #e9e9e9;
+  --border: #cccccc;
+  --text: #101010;
+}
+
+
+/* ==============================
+   RESET
+============================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 78px;
+}
+
+body {
+  margin: 0;
+
+  color: var(--text);
+  background: var(--white);
+
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+
+/* ==============================
+   HEADER
+============================== */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 78px;
+
+  padding: 0 5vw;
+
+  color: white;
+  background: var(--black);
+}
+
+.team-logo {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.emblem-image {
+  width: 56px;
+  height: 56px;
+
+  object-fit: contain;
+}
+
+.logo-text {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.logo-text small {
+  display: block;
+
+  color: var(--red);
+
+  font-size: 0.65rem;
+
+  letter-spacing: 0.18em;
+}
+
+.navigation {
+  display: flex;
+
+  gap: 30px;
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.navigation a {
+  position: relative;
+
+  padding: 10px 0;
+}
+
+.navigation a::after {
+  position: absolute;
+
+  right: 0;
+  bottom: 3px;
+  left: 0;
+
+  height: 2px;
+
+  background: var(--red);
+
+  content: "";
+
+  transform: scaleX(0);
+  transform-origin: right;
+
+  transition: transform 0.25s;
+}
+
+.navigation a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.menu-button {
+  display: none;
+
+  color: white;
+  background: none;
+
+  border: 0;
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* ==============================
+   HERO
+============================== */
+
+.hero {
+  display: grid;
+
+  grid-template-columns: 40% 60%;
+
+  min-height: calc(100vh - 78px);
+
+  color: white;
+  background: var(--black);
+
+  overflow: hidden;
+}
+
+.hero-image {
+  grid-column: 2;
+  grid-row: 1;
+
+  min-height: calc(100vh - 78px);
+
+  background-color: var(--black);
+
+  background-position: center;
+
+  background-size: contain;
+
+  background-repeat: no-repeat;
+
+  animation: photoFadeIn 1.2s ease-out both;
+}
+
+.hero-content {
+  z-index: 2;
+
+  grid-column: 1;
+  grid-row: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 60px 4vw;
+
+  background: var(--black);
+
+  animation: heroFadeUp 1.2s ease-out 2s both;
+}
+
+@keyframes photoFadeIn {
+
+  from {
+    opacity: 0;
+
+    transform: scale(1.02);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: scale(1);
+  }
+
+}
+
+@keyframes heroFadeUp {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+.small-heading {
+  margin: 0;
+
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.2em;
+}
+
+.hero h1 {
+  margin: 25px 0;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: clamp(4rem, 6vw, 7rem);
+
+  font-weight: 800;
+
+  line-height: 0.8;
+
+  letter-spacing: -0.03em;
+}
+
+.hero h1 span {
+  color: transparent;
+
+  -webkit-text-stroke: 2px var(--red);
+}
+
+.hero-description {
+  margin-bottom: 35px;
+
+  font-weight: 500;
+
+  line-height: 1.9;
+}
+
+.main-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 60px;
+
+  padding: 17px 22px;
+
+  color: white;
+  background: var(--red);
+
+  font-size: 0.9rem;
+  font-weight: 800;
+
+  transition: 0.2s;
+}
+
+.main-button:hover {
+  background: var(--dark-red);
+
+  transform: translateY(-3px);
+}
+
+
+/* ==============================
+   COMMON SECTION
+============================== */
+
+.section {
+  padding: 100px 6vw;
+}
+
+.section-title {
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 50px;
+
+  margin-bottom: 45px;
+}
+
+.section-title p {
+  margin: 0;
+
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.2em;
+}
+
+.section-title h2 {
+  margin: 0;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: clamp(3rem, 7vw, 5.5rem);
+
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+.empty-message {
+  padding: 50px 20px;
+
+  color: var(--gray);
+  background: white;
+
+  border: 1px solid var(--border);
+
+  text-align: center;
+}
+
+.dark-empty {
+  color: #aaa;
+
+  background: var(--black-light);
+
+  border-color: #333;
+}
+
+
+/* ==============================
+   NEXT MATCH
+============================== */
+
+.next-match-card {
+  display: grid;
+
+  grid-template-columns: 170px 1fr;
+
+  color: white;
+  background: var(--black);
+}
+
+.large-date {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 35px 20px;
+
+  color: white;
+  background: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+}
+
+.large-date span {
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+}
+
+.large-date strong {
+  font-size: 5rem;
+
+  line-height: 1;
+}
+
+.large-date small {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.next-match-information {
+  padding: 30px 45px;
+}
+
+.competition {
+  color: #888;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.next-team-area {
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 25px;
+
+  margin: 22px 0 10px;
+}
+
+.next-team {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 10px;
+
+  text-align: center;
+}
+
+.next-team img {
+  width: 75px;
+  height: 75px;
+
+  object-fit: contain;
+}
+
+.next-team strong {
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
+}
+
+.vs-text {
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-weight: 800;
+}
+
+.next-match-information p {
+  margin: 15px 0 0;
+
+  color: #aaa;
+
+  font-size: 0.8rem;
+
+  line-height: 1.7;
+}
+
+
+/* ==============================
+   SCHEDULE
+============================== */
+
+.schedule-section {
+  background: var(--light-gray);
+}
+
+.match-list {
+  border-top: 1px solid var(--border);
+}
+
+.match-card {
+  display: grid;
+
+  grid-template-columns: 110px 1fr auto;
+
+  align-items: center;
+
+  gap: 30px;
+
+  padding: 27px 24px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.match-card time,
+.result-summary time {
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+.match-card time strong,
+.result-summary time strong {
+  display: inline-block;
+
+  margin-left: 7px;
+
+  font-size: 2.8rem;
+}
+
+.match-card time small,
+.result-summary time small {
+  display: block;
+}
+
+.match-details {
+  min-width: 0;
+}
+
+.match-details p {
+  margin: 0;
+
+  color: var(--gray);
+
+  font-size: 0.75rem;
+}
+
+.schedule-teams,
+.result-teams {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin: 10px 0;
+}
+
+.mini-team {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: clamp(1rem, 2vw, 1.5rem);
+
+  font-weight: 700;
+}
+
+.mini-team img {
+  width: 42px;
+  height: 42px;
+
+  object-fit: contain;
+}
+
+.schedule-vs {
+  color: #999;
+}
+
+.score {
+  margin: 0 8px;
+
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 1.7rem;
+}
+
+.score i {
+  margin: 0 7px;
+
+  color: #999;
+}
+
+.match-status,
+.result-label {
+  min-width: 66px;
+
+  padding: 8px 12px;
+
+  border: 1px solid #999;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+.result-label.win {
+  color: white;
+
+  background: var(--red);
+
+  border-color: var(--red);
+}
+
+.result-label.lose {
+  color: white;
+
+  background: var(--black);
+
+  border-color: var(--black);
+}
+
+.result-label.draw {
+  background: #ccc;
+
+  border-color: #ccc;
+}
+
+
+/* ==============================
+   RESULT CARD
+============================== */
+
+.result-card {
+  border-bottom: 1px solid var(--border);
+}
+
+.result-summary {
+  display: grid;
+
+  grid-template-columns: 110px 1fr auto;
+
+  align-items: center;
+
+  gap: 30px;
+
+  width: 100%;
+
+  padding: 27px 24px;
+
+  color: inherit;
+
+  background: transparent;
+
+  border: 0;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s;
+}
+
+.result-summary:hover {
+  background: #fff;
+}
+
+.result-card.detail-open
+.result-summary {
+  background: #fff;
+}
+
+.result-side {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.result-arrow {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+
+/* ==============================
+   MATCH DETAIL PANEL
+============================== */
+
+.match-detail-panel {
+  display: grid;
+
+  grid-template-rows: 0fr;
+
+  visibility: hidden;
+
+  opacity: 0;
+
+  background: #fff;
+
+  transition:
+    grid-template-rows 0.4s ease,
+    opacity 0.3s ease,
+    visibility 0.3s;
+}
+
+.result-card.detail-open
+.match-detail-panel {
+  grid-template-rows: 1fr;
+
+  visibility: visible;
+
+  opacity: 1;
+}
+
+.match-detail-inner {
+  min-height: 0;
+
+  overflow: hidden;
+}
+
+.result-card.detail-open
+.match-detail-inner {
+  padding:
+    30px 24px
+    38px 164px;
+}
+
+.detail-heading {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.detail-heading span,
+.detail-photo-title {
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+.detail-heading strong {
+  font-size: 1.2rem;
+}
+
+
+/* ==============================
+   GOAL / ASSIST
+============================== */
+
+.goal-details {
+  display: grid;
+
+  gap: 8px;
+}
+
+.goal-detail {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 15px;
+
+  padding: 14px 16px;
+
+  background: var(--light-gray);
+}
+
+.goal-player,
+.assist-player {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  min-width: 0;
+}
+
+.detail-type {
+  min-width: 48px;
+
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.detail-number {
+  color: var(--black);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.no-assist,
+.no-goal-data {
+  color: #888;
+}
+
+
+/* ==============================
+   MATCH PHOTOS
+============================== */
+
+.detail-photo-title {
+  margin: 30px 0 12px;
+}
+
+.detail-photos {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.match-photo-item {
+  position: relative;
+
+  aspect-ratio: 4 / 3;
+
+  background: #ddd;
+
+  overflow: hidden;
+}
+
+.match-photo-item img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s;
+}
+
+.match-photo-item:hover img {
+  transform: scale(1.03);
+}
+
+.match-no-image {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  display: none;
+
+  transform:
+    translate(-50%, -50%);
+
+  color: #888;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 1.2rem;
+  font-weight: 800;
+
+  letter-spacing: 0.1em;
+}
+
+.match-photo-item.no-image-active
+.match-no-image {
+  display: block;
+}
+
+
+/* ==============================
+   PLAYERS
+============================== */
+
+.players-section {
+  color: white;
+
+  background: var(--black);
+}
+
+.section-title-light {
+  justify-content: space-between;
+}
+
+.photo-guide {
+  color: #999;
+
+  font-size: 0.75rem;
+}
+
+.players-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+.player-card {
+  min-width: 0;
+}
+
+
+/* ==============================
+   PLAYER PHOTO
+============================== */
+
+.player-photo {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+
+  padding: 0;
+
+  aspect-ratio: 3 / 4;
+
+  color: white;
+
+  background: #151515;
+
+  border: 0;
+
+  overflow: hidden;
+
+  cursor: pointer;
+}
+
+.player-image-box {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  transition:
+    opacity 0.5s ease,
+    transform 0.7s ease;
+}
+
+.player-image-box img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  filter: none;
+}
+
+.face-photo {
+  z-index: 2;
+
+  opacity: 1;
+}
+
+.play-photo {
+  z-index: 1;
+
+  opacity: 0;
+}
+
+.player-card.show-play-photo
+.face-photo {
+  opacity: 0;
+}
+
+.player-card.show-play-photo
+.play-photo {
+  z-index: 3;
+
+  opacity: 1;
+
+  transform: scale(1.02);
+}
+
+.photo-label {
+  position: absolute;
+
+  right: 12px;
+  bottom: 12px;
+
+  z-index: 10;
+
+  padding: 7px 10px;
+
+  color: white;
+
+  background: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.65rem;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+
+/* ==============================
+   PLAYER NO IMAGE
+============================== */
+
+.player-no-image {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  display: none;
+
+  transform:
+    translate(-50%, -50%);
+
+  color: #666;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size:
+    clamp(1.3rem, 3vw, 2.2rem);
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  white-space: nowrap;
+}
+
+.player-image-box.no-image-active {
+  background: #151515;
+}
+
+.player-image-box.no-image-active
+.player-no-image {
+  display: block;
+}
+
+
+/* ==============================
+   PLAYER INFO
+============================== */
+
+.player-info {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 17px;
+
+  padding:
+    18px 4px
+    25px;
+}
+
+.player-number {
+  color: var(--red);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 2.8rem;
+
+  line-height: 1;
+}
+
+.player-info h3 {
+  margin:
+    0 0 3px;
+
+  font-size: 1.05rem;
+}
+
+.player-info span {
+  color: #888;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.75rem;
+
+  letter-spacing: 0.08em;
+}
+
+.player-info p {
+  margin:
+    9px 0 0;
+
+  color: #bbb;
+
+  font-size: 0.75rem;
+
+  line-height: 1.7;
+}
+
+
+/* ==============================
+   CONTACT
+============================== */
+
+.contact-section {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 50px;
+
+  background: var(--light-gray);
+}
+
+.contact-section h2 {
+  margin: 15px 0;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: clamp(3rem, 7vw, 6rem);
+
+  line-height: 1;
+}
+
+.contact-description {
+  color: var(--gray);
+
+  line-height: 1.8;
+}
+
+.social-links {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+  min-width: 360px;
+}
+
+.social-link {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 0;
+
+  border-bottom:
+    2px solid var(--text);
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size:
+    clamp(1rem, 2.5vw, 1.6rem);
+
+  font-weight: 700;
+
+  letter-spacing: 0.05em;
+
+  transition: 0.2s;
+}
+
+.social-link:hover {
+  color: var(--red);
+
+  border-color: var(--red);
+
+  transform:
+    translateX(5px);
+}
+
+
+/* ==============================
+   FOOTER
+============================== */
+
+.footer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 45px 6vw;
+
+  color: white;
+
+  background: var(--black);
+}
+
+.footer-emblem {
+  width: 60px;
+  height: 60px;
+}
+
+.footer strong {
+  display: block;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  letter-spacing: 0.08em;
+}
+
+.footer small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #777;
+
+  font-size: 0.65rem;
+}
+
+.footer > a {
+  margin-left: auto;
+
+  font-family: "Barlow Condensed", sans-serif;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 760px) {
+
+  html {
+    scroll-padding-top: 68px;
+  }
+
+
+  /* HEADER */
+
+  .header {
+    height: 68px;
+  }
+
+  .emblem-image {
+    width: 46px;
+    height: 46px;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .menu-button {
+    display: block;
+  }
+
+  .navigation {
+    position: absolute;
+
+    top: 68px;
+    right: 0;
+    left: 0;
+
+    display: none;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-height:
+      calc(100vh - 68px);
+
+    padding: 30px 6vw;
+
+    background: var(--black);
+
+    font-size: 1.5rem;
+  }
+
+  .navigation.open {
+    display: flex;
+  }
+
+  .navigation a {
+    padding: 15px 0;
+
+    border-bottom:
+      1px solid #333;
+  }
+
+
+  /* HERO */
+
+  .hero {
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 0;
+  }
+
+  .hero-image {
+    order: 1;
+
+    width: 100%;
+
+    min-height: 0;
+
+    aspect-ratio: 16 / 9;
+  }
+
+  .hero-content {
+    order: 2;
+
+    display: block;
+
+    width: 100%;
+
+    padding:
+      50px 6vw
+      65px;
+  }
+
+  .hero h1 {
+    font-size:
+      clamp(3.7rem, 17vw, 5.3rem);
+  }
+
+
+  /* SECTION */
+
+  .section {
+    padding:
+      75px 5vw;
+  }
+
+  .section-title {
+    display: block;
+
+    margin-bottom: 30px;
+  }
+
+  .section-title p {
+    margin-bottom: 12px;
+  }
+
+  .photo-guide {
+    display: block;
+
+    margin-top: 14px;
+  }
+
+
+  /* NEXT MATCH */
+
+  .next-match-card {
+    grid-template-columns:
+      95px 1fr;
+  }
+
+  .large-date {
+    padding:
+      25px 10px;
+  }
+
+  .large-date strong {
+    font-size: 3.5rem;
+  }
+
+  .next-match-information {
+    padding:
+      25px 20px;
+  }
+
+  .next-team-area {
+    gap: 10px;
+  }
+
+  .next-team img {
+    width: 52px;
+    height: 52px;
+  }
+
+  .next-team strong {
+    font-size: 1rem;
+  }
+
+
+  /* SCHEDULE */
+
+  .match-card {
+    grid-template-columns:
+      68px 1fr;
+
+    gap: 15px;
+
+    padding:
+      22px 6px;
+  }
+
+  .match-status {
+    display: none;
+  }
+
+  .match-card time strong,
+  .result-summary time strong {
+    font-size: 2rem;
+  }
+
+  .mini-team {
+    font-size: 0.95rem;
+  }
+
+  .mini-team img {
+    width: 34px;
+    height: 34px;
+  }
+
+
+  /* RESULT */
+
+  .result-summary {
+    grid-template-columns:
+      68px 1fr;
+
+    gap: 15px;
+
+    padding:
+      22px 6px;
+  }
+
+  .result-side {
+    grid-column: 2;
+
+    justify-content:
+      flex-end;
+  }
+
+  .result-side
+  .result-label {
+    display: none;
+  }
+
+  .result-card.detail-open
+  .match-detail-inner {
+    padding:
+      25px 6px
+      30px 89px;
+  }
+
+  .goal-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-photos {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* PLAYERS */
+
+  .players-grid {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+
+  /* CONTACT */
+
+  .contact-section {
+    display: block;
+  }
+
+  .social-links {
+    min-width: 0;
+
+    margin-top: 35px;
+  }
+
+}
+
+
+/* ==============================
+   SMALL MOBILE
+============================== */
+
+@media (max-width: 480px) {
+
+  .hero h1 {
+    font-size: 3.8rem;
+  }
+
+  .players-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .player-photo {
+    aspect-ratio: 4 / 5;
+  }
+
+  .footer-emblem {
+    display: none;
+  }
+
+}
+
+
+/* ==============================
+   REDUCED MOTION
+============================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-image,
+  .hero-content {
+    animation: none;
+  }
+
+}
+/* ==============================
+   HERO SLIDESHOW
+============================== */
+
+.hero-image {
+  transition: opacity 0.45s ease-in-out;
+  opacity: 1;
+}
+
+.hero-image.hero-changing {
+  opacity: 0;
+}
