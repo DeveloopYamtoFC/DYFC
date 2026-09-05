@@ -1218,7 +1218,13 @@ const siteData = {
       position: "DF",
       comment: "クレバーディフェンダー",
       faceImage: "./images/players/2a.jpg",
-      playImage: "./images/players/2b.jpg"
+      playImage: "./images/players/2b.jpg",
+      details: {
+        heatmap: [
+          { area: "C4", intensity: 1 },
+          { area: "R3", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1228,7 +1234,12 @@ const siteData = {
       position: "FW",
       comment: "新加入ストライカー",
       faceImage: "./images/players/4a.jpg",
-      playImage: "./images/players/4b.jpg"
+      playImage: "./images/players/4b.jpg",
+      details: {
+        heatmap: [
+          { area: "C1", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1238,7 +1249,12 @@ const siteData = {
       position: "DF",
       comment: "DFリーダー",
       faceImage: "./images/players/5a.jpg",
-      playImage: "./images/players/5b.jpg"
+      playImage: "./images/players/5b.jpg",
+      details: {
+        heatmap: [
+          { area: "C4", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1248,7 +1264,15 @@ const siteData = {
       position: "MF",
       comment: "正確無比な右足",
       faceImage: "./images/players/6a.jpg",
-      playImage: "./images/players/6b.jpg"
+      playImage: "./images/players/6b.jpg",
+      details: {
+        heatmap: [
+          { area: "R3", intensity: 1 },
+          { area: "L1", intensity: 1 },
+          { area: "R2", intensity: 1 },
+          { area: "L2", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1258,7 +1282,12 @@ const siteData = {
       position: "MF",
       comment: "無尽蔵潰し屋",
       faceImage: "./images/players/7a.jpg",
-      playImage: "./images/players/7b.jpg"
+      playImage: "./images/players/7b.jpg",
+      details: {
+        heatmap: [
+          { area: "C3", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1268,7 +1297,14 @@ const siteData = {
       position: "FW",
       comment: "重量級ジョーカー",
       faceImage: "./images/players/8a.jpg",
-      playImage: "./images/players/8b.jpg"
+      playImage: "./images/players/8b.jpg",
+      details: {
+        heatmap: [
+          { area: "C1", intensity: 1 },
+          { area: "R1", intensity: 1 },
+          { area: "L1", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1278,7 +1314,12 @@ const siteData = {
       position: "MF",
       comment: "新加入ゲームメーカー",
       faceImage: "./images/players/9a.jpg",
-      playImage: "./images/players/9b.jpg"
+      playImage: "./images/players/9b.jpg",
+      details: {
+        heatmap: [
+          { area: "C3", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1288,7 +1329,13 @@ const siteData = {
       position: "MF",
       comment: "圧倒的技術",
       faceImage: "./images/players/10a.jpg",
-      playImage: "./images/players/10b.jpg"
+      playImage: "./images/players/10b.jpg",
+      details: {
+        heatmap: [
+          { area: "C2", intensity: 1 },
+          { area: "R2", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1298,7 +1345,16 @@ const siteData = {
       position: "MF",
       comment: "俊足ドリブラー",
       faceImage: "./images/players/11a.jpg",
-      playImage: "./images/players/11b.jpg"
+      playImage: "./images/players/11b.jpg",
+      details: {
+        heatmap: [
+          { area: "R3", intensity: 1 },
+          { area: "R2", intensity: 1 },
+          { area: "R1", intensity: 1 },
+          { area: "C3", intensity: 1 },
+          { area: "C2", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1308,7 +1364,14 @@ const siteData = {
       position: "FW",
       comment: "対パワンタッチゴーラー",
       faceImage: "./images/players/12a.jpg",
-      playImage: "./images/players/12b.jpg"
+      playImage: "./images/players/12b.jpg",
+      details: {
+        heatmap: [
+          { area: "C1", intensity: 1 },
+          { area: "L1", intensity: 1 },
+          { area: "R1", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1318,7 +1381,15 @@ const siteData = {
       position: "MF",
       comment: "ベテランゲームメイカー",
       faceImage: "./images/players/14a.jpg",
-      playImage: "./images/players/14b.jpg"
+      playImage: "./images/players/14b.jpg",
+      details: {
+        heatmap: [
+          { area: "C1", intensity: 1 },
+          { area: "C2", intensity: 1 },
+          { area: "R1", intensity: 1 },
+          { area: "L1", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1328,7 +1399,14 @@ const siteData = {
       position: "MF",
       comment: "アシスト王",
       faceImage: "./images/players/15a.jpg",
-      playImage: "./images/players/15b.jpg"
+      playImage: "./images/players/15b.jpg",
+      details: {
+        heatmap: [
+          { area: "L1", intensity: 1 },
+          { area: "L2", intensity: 1 },
+          { area: "L3", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1338,7 +1416,16 @@ const siteData = {
       position: "DF",
       comment: "攻撃的DF",
       faceImage: "./images/players/17a.jpg",
-      playImage: "./images/players/17b.jpg"
+      playImage: "./images/players/17b.jpg",
+      details: {
+        heatmap: [
+          { area: "L3", intensity: 1 },
+          { area: "C4", intensity: 1 },
+          { area: "R3", intensity: 1 },
+          { area: "L2", intensity: 1 },
+          { area: "R2", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1348,7 +1435,14 @@ const siteData = {
       position: "MF",
       comment: "影武者",
       faceImage: "./images/players/19a.jpg",
-      playImage: "./images/players/19b.jpg"
+      playImage: "./images/players/19b.jpg",
+      details: {
+        heatmap: [
+          { area: "L1", intensity: 1 },
+          { area: "L2", intensity: 1 },
+          { area: "L3", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1358,7 +1452,16 @@ const siteData = {
       position: "MF",
       comment: "オールラウンダー",
       faceImage: "./images/players/20a.jpg",
-      playImage: "./images/players/20b.jpg"
+      playImage: "./images/players/20b.jpg",
+      details: {
+        heatmap: [
+          { area: "C4", intensity: 1 },
+          { area: "C3", intensity: 1 },
+          { area: "C2", intensity: 1 },
+          { area: "C1", intensity: 1 },
+          { area: "R2", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1368,7 +1471,12 @@ const siteData = {
       position: "GK",
       comment: "FPもこなす重量級GK",
       faceImage: "./images/players/21a.jpg",
-      playImage: "./images/players/21b.jpg"
+      playImage: "./images/players/21b.jpg",
+      details: {
+        heatmap: [
+          { area: "C5", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1378,7 +1486,14 @@ const siteData = {
       position: "DF",
       comment: "正確無比な左足",
       faceImage: "./images/players/23a.jpg",
-      playImage: "./images/players/23b.jpg"
+      playImage: "./images/players/23b.jpg",
+      details: {
+        heatmap: [
+          { area: "C5", intensity: 1 },
+          { area: "L3", intensity: 1 },
+          { area: "L2", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1388,7 +1503,16 @@ const siteData = {
       position: "MF",
       comment: "最年少プレイヤー",
       faceImage: "./images/players/26a.jpg",
-      playImage: "./images/players/26b.jpg"
+      playImage: "./images/players/26b.jpg",
+      details: {
+        heatmap: [
+          { area: "C4", intensity: 1 },
+          { area: "R3", intensity: 1 },
+          { area: "L2", intensity: 1 },
+          { area: "R2", intensity: 1 },
+          { area: "C3", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1398,7 +1522,14 @@ const siteData = {
       position: "DF",
       comment: "空中戦マスター",
       faceImage: "./images/players/27a.jpg",
-      playImage: "./images/players/27b.jpg"
+      playImage: "./images/players/27b.jpg",
+      details: {
+        heatmap: [
+          { area: "C4", intensity: 1 },
+          { area: "R3", intensity: 1 },
+          { area: "C1", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1408,7 +1539,14 @@ const siteData = {
       position: "MF",
       comment: "両利きドリブラー",
       faceImage: "./images/players/28a.jpg",
-      playImage: "./images/players/28b.jpg"
+      playImage: "./images/players/28b.jpg",
+      details: {
+        heatmap: [
+          { area: "C2", intensity: 1 },
+          { area: "C1", intensity: 1 },
+          { area: "R1", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1418,7 +1556,12 @@ const siteData = {
       position: "DF",
       comment: "対人専門家",
       faceImage: "./images/players/29a.jpg",
-      playImage: "./images/players/29b.jpg"
+      playImage: "./images/players/29b.jpg",
+      details: {
+        heatmap: [
+          { area: "C4", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1428,7 +1571,12 @@ const siteData = {
       position: "GK",
       comment: "セービングマスター",
       faceImage: "./images/players/31a.jpg",
-      playImage: "./images/players/31b.jpg"
+      playImage: "./images/players/31b.jpg",
+      details: {
+        heatmap: [
+          { area: "C5", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1438,7 +1586,12 @@ const siteData = {
       position: "MF",
       comment: "技巧派ボランチ",
       faceImage: "./images/players/44a.jpg",
-      playImage: "./images/players/44b.jpg"
+      playImage: "./images/players/44b.jpg",
+      details: {
+        heatmap: [
+          { area: "C3", intensity: 1 }
+        ]
+      }
     },
 
     {
@@ -1448,7 +1601,13 @@ const siteData = {
       position: "FW",
       comment: "長身ストライカー",
       faceImage: "./images/players/77a.jpg",
-      playImage: "./images/players/77b.jpg"
+      playImage: "./images/players/77b.jpg",
+      details: {
+        heatmap: [
+          { area: "C1", intensity: 1 },
+          { area: "R1", intensity: 1 }
+        ]
+      }
     }
   ]
 };

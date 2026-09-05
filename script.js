@@ -1228,6 +1228,13 @@ function setResultAccordion(container) {
 // スタッツランキング
 // ==============================
 
+let currentStatsSeason = "2026";
+
+const statsRankingExpanded = {
+  goal: false,
+  assist: false
+};
+
 function displayStatsRanking() {
 
   const seasonButtons =
@@ -1246,6 +1253,9 @@ function displayStatsRanking() {
     button.addEventListener(
       "click",
       function () {
+
+        statsRankingExpanded.goal = false;
+        statsRankingExpanded.assist = false;
 
         seasonButtons.forEach(function (item) {
 
@@ -1291,6 +1301,8 @@ function displayStatsRanking() {
 function renderStatsRanking(
   selectedSeason
 ) {
+
+  currentStatsSeason = selectedSeason;
 
   const goalContainer =
     document.getElementById(
@@ -1405,15 +1417,20 @@ function renderStatsRanking(
   goalContainer.innerHTML =
     createStatsRankingHtml(
       goalCounts,
-      "goal"
+      "goal",
+      statsRankingExpanded.goal
     );
 
 
   assistContainer.innerHTML =
     createStatsRankingHtml(
       assistCounts,
-      "assist"
+      "assist",
+      statsRankingExpanded.assist
     );
+
+
+  setStatsRankingEvents();
 
 }
 
@@ -1538,7 +1555,8 @@ function addStatsCount(
 
 function createStatsRankingHtml(
   statsMap,
-  type
+  type,
+  showAll
 ) {
 
   const sortedPlayers =
@@ -1570,7 +1588,7 @@ function createStatsRankingHtml(
   let currentRank = 0;
 
 
-  const rankedPlayers =
+  const allRankedPlayers =
     sortedPlayers
       .map(function (player, index) {
 
@@ -1592,15 +1610,13 @@ function createStatsRankingHtml(
           ...player,
           rank: currentRank
         };
-
-      })
-      .filter(function (player) {
-
-        return (
-          player.rank <= 3
-        );
-
       });
+
+
+  const rankedPlayers =
+    showAll
+      ? allRankedPlayers
+      : allRankedPlayers.slice(0, 3);
 
 
   if (rankedPlayers.length === 0) {
@@ -1630,7 +1646,7 @@ function createStatsRankingHtml(
       : "ASSISTS";
 
 
-  return rankedPlayers
+  const rankingCards = rankedPlayers
     .map(function (player) {
 
       const imageHtml =
@@ -1652,6 +1668,7 @@ function createStatsRankingHtml(
 
         <article
           class="stats-card stats-rank-${player.rank}"
+          ${player.number ? `data-ranking-player="${player.number}" tabindex="0" role="button" aria-label="${player.name}の選手紹介へ移動"` : ""}
         >
 
           <div class="stats-rank-number">
@@ -1713,6 +1730,76 @@ function createStatsRankingHtml(
 
     })
     .join("");
+
+
+  const moreButton =
+    allRankedPlayers.length > 3
+      ? `
+        <button
+          class="stats-more-button${showAll ? " is-open" : ""}"
+          type="button"
+          data-stats-more="${type}"
+          aria-expanded="${String(showAll)}"
+        >
+          ${showAll ? "閉じる" : "もっと見る"}
+          <span aria-hidden="true">${showAll ? "−" : "＋"}</span>
+        </button>
+      `
+      : "";
+
+
+  return rankingCards + moreButton;
+
+}
+
+
+// ==============================
+// ランキング操作
+// ==============================
+
+function setStatsRankingEvents() {
+
+  document
+    .querySelectorAll("[data-stats-more]")
+    .forEach(function (button) {
+      button.addEventListener("click", function () {
+        const type = button.dataset.statsMore;
+        statsRankingExpanded[type] = !statsRankingExpanded[type];
+        renderStatsRanking(currentStatsSeason);
+      });
+    });
+
+
+  document
+    .querySelectorAll("[data-ranking-player]")
+    .forEach(function (card) {
+
+      function moveToPlayer() {
+        const playerNumber = card.dataset.rankingPlayer;
+        const playerCard = document.querySelector(
+          `.player-card[data-player-number="${playerNumber}"]`
+        );
+
+        if (!playerCard) return;
+
+        playerCard.scrollIntoView({ behavior: "smooth", block: "center" });
+        playerCard.classList.remove("is-ranking-target");
+        window.setTimeout(function () {
+          playerCard.classList.add("is-ranking-target");
+        }, 50);
+
+        const playerButton = playerCard.querySelector(".player-photo");
+        if (playerButton) playerButton.focus({ preventScroll: true });
+      }
+
+      card.addEventListener("click", moveToPlayer);
+      card.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          moveToPlayer();
+        }
+      });
+    });
 
 }
 
@@ -2029,12 +2116,12 @@ function displayPlayers() {
 
         return `
 
-          <article class="player-card">
+          <article class="player-card${player.details ? " has-details" : ""}" data-player-number="${player.number}">
 
             <button
               class="player-photo"
               type="button"
-              aria-label="${player.name}の写真を切り替える"
+              aria-label="${player.name}${player.details ? "の選手詳細を開く" : "の写真を切り替える"}"
             >
 
               <div class="player-image-box face-photo">
@@ -2068,7 +2155,7 @@ function displayPlayers() {
 
 
               <span class="photo-label">
-                FACE / PLAY
+                ${player.details ? "PLAYER DETAILS" : "FACE / PLAY"}
               </span>
 
             </button>
@@ -2142,9 +2229,17 @@ function displayPlayers() {
           }
 
 
-          card.classList.toggle(
-            "show-play-photo"
-          );
+          const playerNumber = Number(card.dataset.playerNumber);
+          const player = siteData.players.find(function (item) {
+            return item.number === playerNumber;
+          });
+
+          if (player && player.details) {
+            openPlayerDetail(player);
+            return;
+          }
+
+          card.classList.toggle("show-play-photo");
 
         }
       );
@@ -2418,3 +2513,263 @@ function setMenu() {
     });
 
 }
+
+
+// ==============================
+// 選手詳細モーダル
+// ==============================
+
+let playerDetailSlideIndex = 0;
+let playerDetailLastFocus = null;
+
+function openPlayerDetail(player) {
+  const modal = document.getElementById("playerDetailModal");
+  const content = document.getElementById("playerDetailContent");
+
+  if (!modal || !content || !player.details) return;
+
+  playerDetailLastFocus = document.activeElement;
+  playerDetailSlideIndex = 0;
+
+  content.innerHTML = `
+    <div class="player-detail-visual">
+      <div class="player-detail-slider">
+        <div class="player-detail-slides">
+          <figure class="player-detail-slide is-active">
+            <img src="${player.faceImage}" alt="${player.name}の顔写真" onerror="showDetailNoImage(this)">
+            <span>NO IMAGE</span>
+          </figure>
+          <figure class="player-detail-slide">
+            <img src="${player.playImage}" alt="${player.name}のプレー写真" onerror="showDetailNoImage(this)">
+            <span>NO IMAGE</span>
+          </figure>
+        </div>
+        <button class="player-slide-arrow player-slide-prev" type="button" aria-label="前の写真" data-player-slide="prev">‹</button>
+        <button class="player-slide-arrow player-slide-next" type="button" aria-label="次の写真" data-player-slide="next">›</button>
+        <div class="player-slide-dots" aria-label="写真の選択">
+          <button class="is-active" type="button" data-player-slide-index="0" aria-label="顔写真を表示"></button>
+          <button type="button" data-player-slide-index="1" aria-label="プレー写真を表示"></button>
+        </div>
+      </div>
+      <div class="player-detail-heading">
+        <span class="player-detail-number">${String(player.number).padStart(2, "0")}</span>
+        <div>
+          <p>${player.position} / ${player.englishName}</p>
+          <h2 id="playerDetailName">${player.name}</h2>
+          <strong>${player.comment || ""}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-detail-data">
+      <section class="player-detail-section">
+        <div class="player-detail-section-title"><p>PLAYER STATS</p><h3>スタッツ</h3></div>
+        <div class="player-stats-tabs" role="tablist" aria-label="スタッツ集計期間">
+          <button class="is-active" type="button" data-player-stats="season" aria-pressed="true">今シーズン</button>
+          <button type="button" data-player-stats="allTime" aria-pressed="false">累計</button>
+        </div>
+        <div id="playerStatsContent" class="player-stats-grid"></div>
+      </section>
+      <section class="player-detail-section player-position-section">
+        <div class="player-detail-section-title"><p>POSITION MAP</p><h3>主なプレーエリア</h3></div>
+        ${createPlayerPitch(player.details.heatmap || [])}
+        <p class="player-heatmap-note">色が濃いエリアほど、主にプレーするポジションです。</p>
+      </section>
+    </div>`;
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("player-modal-open");
+  renderPlayerStats(
+    getPlayerDetailStats(player, "season")
+  );
+  setPlayerDetailEvents(player);
+
+  const closeButton = modal.querySelector(".player-detail-close");
+  if (closeButton) closeButton.focus();
+}
+
+function closePlayerDetail() {
+  const modal = document.getElementById("playerDetailModal");
+  if (!modal) return;
+
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("player-modal-open");
+  if (playerDetailLastFocus && typeof playerDetailLastFocus.focus === "function") {
+    playerDetailLastFocus.focus();
+  }
+}
+
+function setPlayerDetailEvents(player) {
+  const modal = document.getElementById("playerDetailModal");
+  if (!modal) return;
+
+  modal.querySelectorAll("[data-player-modal-close]").forEach(function (button) {
+    button.addEventListener("click", closePlayerDetail);
+  });
+
+  modal.querySelectorAll("[data-player-slide]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      changePlayerDetailSlide(button.dataset.playerSlide === "next" ? 1 : -1);
+    });
+  });
+
+  modal.querySelectorAll("[data-player-slide-index]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      showPlayerDetailSlide(Number(button.dataset.playerSlideIndex));
+    });
+  });
+
+  modal.querySelectorAll("[data-player-stats]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      modal.querySelectorAll("[data-player-stats]").forEach(function (tab) {
+        const active = tab === button;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-pressed", String(active));
+      });
+      renderPlayerStats(
+        getPlayerDetailStats(
+          player,
+          button.dataset.playerStats
+        )
+      );
+    });
+  });
+}
+
+function changePlayerDetailSlide(direction) {
+  showPlayerDetailSlide(playerDetailSlideIndex + direction);
+}
+
+function showPlayerDetailSlide(index) {
+  const modal = document.getElementById("playerDetailModal");
+  if (!modal) return;
+
+  const slides = modal.querySelectorAll(".player-detail-slide");
+  const dots = modal.querySelectorAll("[data-player-slide-index]");
+  if (!slides.length) return;
+
+  playerDetailSlideIndex = (index + slides.length) % slides.length;
+  slides.forEach(function (slide, slideIndex) {
+    slide.classList.toggle("is-active", slideIndex === playerDetailSlideIndex);
+  });
+  dots.forEach(function (dot, dotIndex) {
+    dot.classList.toggle("is-active", dotIndex === playerDetailSlideIndex);
+  });
+}
+
+function renderPlayerStats(stats) {
+  const container = document.getElementById("playerStatsContent");
+  if (!container) return;
+
+  const safeStats = stats || {};
+  const items = [
+    ["得点", safeStats.goals || 0, "GOALS"],
+    ["アシスト", safeStats.assists || 0, "ASSISTS"]
+  ];
+
+  container.innerHTML = items.map(function (item) {
+    return `<div class="player-stat-item"><span>${item[2]}</span><strong>${item[1]}</strong><small>${item[0]}</small></div>`;
+  }).join("");
+}
+
+
+// ==============================
+// 選手ごとの得点・アシスト自動集計
+// ==============================
+
+function getPlayerDetailStats(player, period) {
+
+  const currentMatches =
+    Array.isArray(siteData.matches)
+      ? siteData.matches
+      : [];
+
+  const previousMatches =
+    Array.isArray(siteData.previousMatches)
+      ? siteData.previousMatches
+      : [];
+
+  const targetMatches =
+    period === "allTime"
+      ? [...currentMatches, ...previousMatches]
+      : currentMatches;
+
+  const playerName =
+    normalizeStatsName(player.name);
+
+  const stats = {
+    goals: 0,
+    assists: 0
+  };
+
+  targetMatches
+    .filter(function (match) {
+      return match.status === "finished";
+    })
+    .forEach(function (match) {
+
+      if (!Array.isArray(match.goals)) {
+        return;
+      }
+
+      match.goals.forEach(function (goal) {
+
+        if (
+          normalizeStatsName(goal.scorer) ===
+          playerName
+        ) {
+          stats.goals += 1;
+        }
+
+        if (
+          goal.assist &&
+          normalizeStatsName(goal.assist) ===
+          playerName
+        ) {
+          stats.assists += 1;
+        }
+
+      });
+
+    });
+
+  return stats;
+
+}
+
+function createPlayerPitch(heatmap) {
+  const areas = [
+    "L1", "L2", "L3",
+    "C1", "C2", "C3", "C4", "C5",
+    "R1", "R2", "R3"
+  ];
+  const intensityMap = {};
+
+  heatmap.forEach(function (item) {
+    intensityMap[item.area] = Math.max(0, Math.min(1, Number(item.intensity) || 0));
+  });
+
+  const zones = areas.map(function (area) {
+    return `<span class="pitch-heat-zone" data-heat-area="${area}" style="--heat-opacity: ${intensityMap[area] || 0}"></span>`;
+  }).join("");
+
+  return `<div class="player-pitch" aria-label="左右3分割、中央5分割のポジションヒートマップ">
+    <div class="pitch-heat-layer">${zones}</div>
+    <span class="pitch-line pitch-halfway"></span><span class="pitch-center-circle"></span>
+    <span class="pitch-box pitch-box-top"></span><span class="pitch-goal-box pitch-goal-box-top"></span>
+    <span class="pitch-box pitch-box-bottom"></span><span class="pitch-goal-box pitch-goal-box-bottom"></span>
+    <span class="pitch-center-dot"></span>
+  </div>`;
+}
+
+function showDetailNoImage(image) {
+  image.style.display = "none";
+  const placeholder = image.nextElementSibling;
+  if (placeholder) placeholder.style.display = "grid";
+}
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") closePlayerDetail();
+});
