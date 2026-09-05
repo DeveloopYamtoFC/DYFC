@@ -2571,9 +2571,9 @@ function openPlayerDetail(player) {
         <div id="playerStatsContent" class="player-stats-grid"></div>
       </section>
       <section class="player-detail-section player-position-section">
-        <div class="player-detail-section-title"><p>POSITION MAP</p><h3>主なプレーエリア</h3></div>
+        <div class="player-detail-section-title"><p>POSITION MAP</p><h3></h3></div>
         ${createPlayerPitch(player.details.heatmap || [])}
-        <p class="player-heatmap-note">色が濃いエリアほど、主にプレーするポジションです。</p>
+        <p class="player-heatmap-note"></p>
       </section>
     </div>`;
 
