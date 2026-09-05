@@ -18,6 +18,7 @@
   >
 
   <!-- ブラウザアイコン -->
+
   <link
     rel="icon"
     type="image/jpeg"
@@ -25,6 +26,7 @@
   >
 
   <!-- iPhone等のホーム画面アイコン -->
+
   <link
     rel="apple-touch-icon"
     href="./images/emblem.jpg"
@@ -85,7 +87,6 @@
     content="https://develoopyamatofc.github.io/DYFC/images/emblem.jpg"
   >
 
-
   <link
     rel="stylesheet"
     href="./style.css"
@@ -139,6 +140,7 @@
     <nav
       id="navigation"
       class="navigation"
+      aria-label="メインメニュー"
     >
 
       <a href="#next-match">
@@ -151,6 +153,10 @@
 
       <a href="#results">
         RESULTS
+      </a>
+
+      <a href="#stats-ranking">
+        STATS RANKING
       </a>
 
       <a href="#players">
@@ -170,7 +176,7 @@
 
 
     <!-- ==============================
-         トップ
+         トップ・ヘッダー写真
     ============================== -->
 
     <section class="hero">
@@ -188,34 +194,64 @@
           YAMATO / KANAGAWA
         </p>
 
+
         <h1>
           DEVELOOP
           <br>
+
           <span>
             YAMATO FC
           </span>
         </h1>
 
+
         <p class="hero-description">
-          神奈川県大和市を拠点に活動する
+          神奈川県2部リーグ所属
           <br>
-          社会人サッカーチーム
+          大和市、横浜市を中心に活動中
         </p>
 
-        <a
-          href="#next-match"
-          class="main-button"
+
+        <!-- トップ画面の移動ボタン -->
+
+        <nav
+          class="hero-menu"
+          aria-label="ページ内メニュー"
         >
 
-          <span>
-            次の試合を見る
-          </span>
+          <a href="#next-match">
+            NEXT MATCH
+          </a>
 
-          <span aria-hidden="true">
-            ↘
-          </span>
+          <a href="#schedule">
+            SCHEDULE
+          </a>
 
-        </a>
+          <a href="#results">
+            RESULTS
+          </a>
+
+          <a href="#stats-ranking">
+            STATS RANKING
+          </a>
+
+          <a href="#players">
+            PLAYERS
+          </a>
+
+          <a href="#contact">
+            CONTACT
+          </a>
+
+        </nav>
+
+
+        <!-- ヘッダー写真の丸ボタン -->
+
+        <div
+          class="hero-dots"
+          aria-label="ヘッダー写真を選択"
+        ></div>
 
       </div>
 
@@ -303,10 +339,161 @@
       </div>
 
 
+      <!-- 試合結果のシーズン切り替え -->
+
+      <div
+        class="season-tabs"
+        aria-label="表示するシーズンを選択"
+      >
+
+        <button
+          class="season-tab is-active"
+          type="button"
+          data-season="2026"
+          aria-pressed="true"
+        >
+          2026 SEASON
+        </button>
+
+
+        <button
+          class="season-tab"
+          type="button"
+          data-season="2025"
+          aria-pressed="false"
+        >
+          2025 SEASON
+        </button>
+
+      </div>
+
+
+      <!-- シーズン順位 -->
+
+      <div
+        id="seasonResultSummary"
+        class="season-result-summary"
+      ></div>
+
+
+      <!-- 試合結果一覧 -->
+
       <div
         id="resultsContainer"
         class="match-list"
       ></div>
+
+    </section>
+
+
+    <!-- ==============================
+         スタッツランキング
+    ============================== -->
+
+    <section
+      id="stats-ranking"
+      class="section stats-section"
+    >
+
+      <div class="section-title">
+
+        <p>
+          04 / STATS RANKING
+        </p>
+
+        <h2>
+          スタッツランキング
+        </h2>
+
+      </div>
+
+
+      <!-- ランキングのシーズン切り替え -->
+
+      <div
+        class="stats-season-tabs"
+        aria-label="ランキングの集計期間を選択"
+      >
+
+        <button
+          class="stats-season-tab is-active"
+          type="button"
+          data-stats-season="2026"
+          aria-pressed="true"
+        >
+          2026 SEASON
+        </button>
+
+
+        <button
+          class="stats-season-tab"
+          type="button"
+          data-stats-season="2025"
+          aria-pressed="false"
+        >
+          2025 SEASON
+        </button>
+
+
+        <button
+          class="stats-season-tab"
+          type="button"
+          data-stats-season="all"
+          aria-pressed="false"
+        >
+          ALL TIME
+        </button>
+
+      </div>
+
+
+      <div class="stats-ranking-grid">
+
+
+        <!-- 得点ランキング -->
+
+        <div class="stats-ranking-block">
+
+          <h3>
+
+            <span aria-hidden="true">
+              ⚽
+            </span>
+
+            GOAL RANKING
+
+          </h3>
+
+
+          <div
+            id="goalRankingContainer"
+          ></div>
+
+        </div>
+
+
+        <!-- アシストランキング -->
+
+        <div class="stats-ranking-block">
+
+          <h3>
+
+            <span aria-hidden="true">
+              👟
+            </span>
+
+            ASSIST RANKING
+
+          </h3>
+
+
+          <div
+            id="assistRankingContainer"
+          ></div>
+
+        </div>
+
+      </div>
 
     </section>
 
@@ -327,7 +514,7 @@
         <div>
 
           <p>
-            04 / PLAYERS
+            05 / PLAYERS
           </p>
 
           <h2>
@@ -361,7 +548,7 @@
         <p
           class="small-heading contact-number"
         >
-          05 / CONTACT
+          06 / CONTACT
         </p>
 
         <h2>

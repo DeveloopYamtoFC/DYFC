@@ -18,7 +18,6 @@ const siteData = {
     emblemImage:
       "./images/emblem.jpg",
 
-    // ヘッダーで2秒ごとに切り替える写真
     heroImages: [
       "./images/header1.jpg",
       "./images/header2.jpg",
@@ -30,85 +29,61 @@ const siteData = {
 
 
   // ==============================
-  // 試合情報
+  // 2026シーズン
   // ==============================
 
   matches: [
 
-    // ==============================
     // 次の試合
-    // ==============================
 
     {
       id: 1,
-
       date: "2026-09-13",
-
-      competition:
-        "神奈川県社会人2部リーグ",
-
-      homeTeam:
-        "Develoop Yamato FC",
-
-      awayTeam:
-        "クラブテアトロ",
-
-      homeEmblem:
-        "./images/emblem.jpg",
-
-      awayEmblem:
-        "./images/opponents/teatoro.jpg",
-
-      place:
-        "及川球技場",
-
-      kickoff:
-        "17:05",
-
-      status:
-        "upcoming",
-
+      competition: "神奈川県社会人2部リーグ",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "クラブテアトロ",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/teatoro.jpg",
+      place: "及川球技場",
+      kickoff: "17:05",
+      status: "upcoming",
       homeScore: null,
       awayScore: null,
-
       goals: [],
+      photos: []
+    },
 
+     {
+      id: 1,
+      date: "2026-10-11",
+      competition: "神奈川県社会人2部リーグ",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "FC GRANSUMA",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/gransuma.jpg",
+      place: "大和ゆとりの森",
+      kickoff: "19:05",
+      status: "upcoming",
+      homeScore: null,
+      awayScore: null,
+      goals: [],
       photos: []
     },
 
 
-    // ==============================
     // 第1節
-    // ==============================
 
     {
       id: 2,
-
       date: "2026-04-12",
-
-      competition:
-        "県社会人リーグ 第1節",
-
-      homeTeam:
-        "Develoop Yamato FC",
-
-      awayTeam:
-        "TsujidoFC",
-
-      homeEmblem:
-        "./images/emblem.jpg",
-
-      awayEmblem:
-        "./images/opponents/tsujido-fc.jpg",
-
-      place:
-        "ゴールドクレストスタジアム鎌倉",
-
+      competition: "県社会人リーグ 第1節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "TsujidoFC",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/tsujido-fc.jpg",
+      place: "ゴールドクレストスタジアム鎌倉",
       kickoff: "",
-
-      status:
-        "finished",
-
+      status: "finished",
       homeScore: 2,
       awayScore: 1,
 
@@ -119,7 +94,6 @@ const siteData = {
           assist: null,
           assistNumber: null
         },
-
         {
           scorer: "杉崎勇哉",
           scorerNumber: 5,
@@ -130,64 +104,34 @@ const siteData = {
 
       photos: [
         {
-          image:
-            "./matches/041201.jpg",
-
-          alt:
-            "TsujidoFC戦 試合写真1"
+          image: "./matches/041201.jpg",
+          alt: "TsujidoFC戦 試合写真1"
         },
-
         {
-          image:
-            "./matches/041202.jpg",
-
-          alt:
-            "TsujidoFC戦 試合写真2"
+          image: "./matches/041202.jpg",
+          alt: "TsujidoFC戦 試合写真2"
         },
-
         {
-          image:
-            "./matches/041203.jpg",
-
-          alt:
-            "TsujidoFC戦 試合写真3"
+          image: "./matches/041203.jpg",
+          alt: "TsujidoFC戦 試合写真3"
         }
       ]
     },
 
 
-    // ==============================
     // 第2節
-    // ==============================
 
     {
       id: 3,
-
       date: "2026-04-19",
-
-      competition:
-        "県社会人リーグ 第2節",
-
-      homeTeam:
-        "Develoop Yamato FC",
-
-      awayTeam:
-        "CLUBMARADO",
-
-      homeEmblem:
-        "./images/emblem.jpg",
-
-      awayEmblem:
-        "./images/opponents/clubmarado.jpg",
-
-      place:
-        "谷本公園",
-
+      competition: "県社会人リーグ 第2節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "CLUBMARADO",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/clubmarado.jpg",
+      place: "谷本公園",
       kickoff: "",
-
-      status:
-        "finished",
-
+      status: "finished",
       homeScore: 2,
       awayScore: 1,
 
@@ -198,7 +142,6 @@ const siteData = {
           assist: "前田マイケル純",
           assistNumber: 4
         },
-
         {
           scorer: "前田マイケル純",
           scorerNumber: 4,
@@ -209,64 +152,34 @@ const siteData = {
 
       photos: [
         {
-          image:
-            "./matches/041901.jpg",
-
-          alt:
-            "CLUBMARADO戦 試合写真1"
+          image: "./matches/041901.jpg",
+          alt: "CLUBMARADO戦 試合写真1"
         },
-
         {
-          image:
-            "./matches/041902.jpg",
-
-          alt:
-            "CLUBMARADO戦 試合写真2"
+          image: "./matches/041902.jpg",
+          alt: "CLUBMARADO戦 試合写真2"
         },
-
         {
-          image:
-            "./matches/041903.jpg",
-
-          alt:
-            "CLUBMARADO戦 試合写真3"
+          image: "./matches/041903.jpg",
+          alt: "CLUBMARADO戦 試合写真3"
         }
       ]
     },
 
 
-    // ==============================
     // 第3節
-    // ==============================
 
     {
       id: 4,
-
       date: "2026-05-10",
-
-      competition:
-        "県社会人リーグ 第3節",
-
-      homeTeam:
-        "Develoop Yamato FC",
-
-      awayTeam:
-        "FC REBIRTH",
-
-      homeEmblem:
-        "./images/emblem.jpg",
-
-      awayEmblem:
-        "./images/opponents/fc-rebirth.jpg",
-
-      place:
-        "谷本公園",
-
+      competition: "県社会人リーグ 第3節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "FC REBIRTH",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/fc-rebirth.jpg",
+      place: "谷本公園",
       kickoff: "",
-
-      status:
-        "finished",
-
+      status: "finished",
       homeScore: 2,
       awayScore: 1,
 
@@ -277,7 +190,6 @@ const siteData = {
           assist: "圓大二郎",
           assistNumber: 14
         },
-
         {
           scorer: "秋山健",
           scorerNumber: 20,
@@ -288,64 +200,34 @@ const siteData = {
 
       photos: [
         {
-          image:
-            "./matches/051001.jpg",
-
-          alt:
-            "FC REBIRTH戦 試合写真1"
+          image: "./matches/051001.jpg",
+          alt: "FC REBIRTH戦 試合写真1"
         },
-
         {
-          image:
-            "./matches/051002.jpg",
-
-          alt:
-            "FC REBIRTH戦 試合写真2"
+          image: "./matches/051002.jpg",
+          alt: "FC REBIRTH戦 試合写真2"
         },
-
         {
-          image:
-            "./matches/051003.jpg",
-
-          alt:
-            "FC REBIRTH戦 試合写真3"
+          image: "./matches/051003.jpg",
+          alt: "FC REBIRTH戦 試合写真3"
         }
       ]
     },
 
 
-    // ==============================
     // 第4節
-    // ==============================
 
     {
       id: 5,
-
       date: "2026-05-24",
-
-      competition:
-        "県社会人リーグ 第4節",
-
-      homeTeam:
-        "Develoop Yamato FC",
-
-      awayTeam:
-        "瀬谷インターナショナル",
-
-      homeEmblem:
-        "./images/emblem.jpg",
-
-      awayEmblem:
-        "./images/opponents/seya-international.jpg",
-
-      place:
-        "大和ゆとりの森",
-
+      competition: "県社会人リーグ 第4節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "瀬谷インターナショナル",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/seya-international.jpg",
+      place: "大和ゆとりの森",
       kickoff: "",
-
-      status:
-        "finished",
-
+      status: "finished",
       homeScore: 4,
       awayScore: 1,
 
@@ -356,21 +238,18 @@ const siteData = {
           assist: "吉川然",
           assistNumber: 15
         },
-
         {
           scorer: "圓大二郎",
           scorerNumber: 14,
           assist: "高木崚汰",
           assistNumber: 11
         },
-
         {
           scorer: "大森駿",
           scorerNumber: 77,
           assist: "吉川然",
           assistNumber: 15
         },
-
         {
           scorer: "田中恭汰",
           scorerNumber: 12,
@@ -381,64 +260,34 @@ const siteData = {
 
       photos: [
         {
-          image:
-            "./matches/052401.jpg",
-
-          alt:
-            "瀬谷インターナショナル戦 試合写真1"
+          image: "./matches/052401.jpg",
+          alt: "瀬谷インターナショナル戦 試合写真1"
         },
-
         {
-          image:
-            "./matches/052402.jpg",
-
-          alt:
-            "瀬谷インターナショナル戦 試合写真2"
+          image: "./matches/052402.jpg",
+          alt: "瀬谷インターナショナル戦 試合写真2"
         },
-
         {
-          image:
-            "./matches/052403.jpg",
-
-          alt:
-            "瀬谷インターナショナル戦 試合写真3"
+          image: "./matches/052403.jpg",
+          alt: "瀬谷インターナショナル戦 試合写真3"
         }
       ]
     },
 
 
-    // ==============================
     // 第5節
-    // ==============================
 
     {
       id: 6,
-
       date: "2026-06-07",
-
-      competition:
-        "県社会人リーグ 第5節",
-
-      homeTeam:
-        "Develoop Yamato FC",
-
-      awayTeam:
-        "JFC FUTURO",
-
-      homeEmblem:
-        "./images/emblem.jpg",
-
-      awayEmblem:
-        "./images/opponents/jfc-futuro.jpg",
-
-      place:
-        "星槎箱根仙石原",
-
+      competition: "県社会人リーグ 第5節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "JFC FUTURO",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/jfc-futuro.jpg",
+      place: "星槎箱根仙石原",
       kickoff: "",
-
-      status:
-        "finished",
-
+      status: "finished",
       homeScore: 2,
       awayScore: 3,
 
@@ -449,7 +298,6 @@ const siteData = {
           assist: null,
           assistNumber: null
         },
-
         {
           scorer: "大木健海",
           scorerNumber: 27,
@@ -460,64 +308,34 @@ const siteData = {
 
       photos: [
         {
-          image:
-            "./matches/060701.jpg",
-
-          alt:
-            "JFC FUTURO戦 試合写真1"
+          image: "./matches/060701.jpg",
+          alt: "JFC FUTURO戦 試合写真1"
         },
-
         {
-          image:
-            "./matches/060702.jpg",
-
-          alt:
-            "JFC FUTURO戦 試合写真2"
+          image: "./matches/060702.jpg",
+          alt: "JFC FUTURO戦 試合写真2"
         },
-
         {
-          image:
-            "./matches/060703.jpg",
-
-          alt:
-            "JFC FUTURO戦 試合写真3"
+          image: "./matches/060703.jpg",
+          alt: "JFC FUTURO戦 試合写真3"
         }
       ]
     },
 
 
-    // ==============================
     // 第6節
-    // ==============================
 
     {
       id: 7,
-
       date: "2026-06-21",
-
-      competition:
-        "県社会人リーグ 第6節",
-
-      homeTeam:
-        "Develoop Yamato FC",
-
-      awayTeam:
-        "FC SOCIOS",
-
-      homeEmblem:
-        "./images/emblem.jpg",
-
-      awayEmblem:
-        "./images/opponents/fc-socios.jpg",
-
-      place:
-        "大和ゆとりの森",
-
+      competition: "県社会人リーグ 第6節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "FC SOCIOS",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/fc-socios.jpg",
+      place: "大和ゆとりの森",
       kickoff: "",
-
-      status:
-        "finished",
-
+      status: "finished",
       homeScore: 2,
       awayScore: 3,
 
@@ -528,7 +346,6 @@ const siteData = {
           assist: null,
           assistNumber: null
         },
-
         {
           scorer: "秋山健",
           scorerNumber: 20,
@@ -539,43 +356,313 @@ const siteData = {
 
       photos: [
         {
-          image:
-            "./matches/062101.jpg",
-
-          alt:
-            "FC SOCIOS戦 試合写真1"
+          image: "./matches/062101.jpg",
+          alt: "FC SOCIOS戦 試合写真1"
         },
-
         {
-          image:
-            "./matches/062102.jpg",
-
-          alt:
-            "FC SOCIOS戦 試合写真2"
+          image: "./matches/062102.jpg",
+          alt: "FC SOCIOS戦 試合写真2"
         },
-
         {
-          image:
-            "./matches/062103.jpg",
-
-          alt:
-            "FC SOCIOS戦 試合写真3"
+          image: "./matches/062103.jpg",
+          alt: "FC SOCIOS戦 試合写真3"
         }
       ]
     },
 
 
-    // ==============================
     // 第7節
-    // ==============================
 
     {
       id: 8,
-
       date: "2026-07-05",
+      competition: "県社会人リーグ 第7節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "横須賀高校OB",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/yokosuka-ob.jpg",
+      place: "横須賀リーフ",
+      kickoff: "",
+      status: "finished",
+      homeScore: 3,
+      awayScore: 4,
 
+      goals: [
+        {
+          scorer: "今井裕太",
+          scorerNumber: 10,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "圓大二郎",
+          scorerNumber: 14,
+          assist: "高木崚汰",
+          assistNumber: 11
+        },
+        {
+          scorer: "田中恭汰",
+          scorerNumber: 12,
+          assist: "秋山健",
+          assistNumber: 20
+        }
+      ],
+
+      photos: [
+        {
+          image: "./matches/070501.jpg",
+          alt: "横須賀高校OB戦 試合写真1"
+        },
+        {
+          image: "./matches/070502.jpg",
+          alt: "横須賀高校OB戦 試合写真2"
+        },
+        {
+          image: "./matches/070503.jpg",
+          alt: "横須賀高校OB戦 試合写真3"
+        }
+      ]
+    },
+
+
+    // 第8節
+
+    {
+      id: 9,
+      date: "2026-07-19",
+      competition: "県社会人リーグ 第8節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "PAYASO",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/payaso.jpg",
+      place: "大和ゆとりの森",
+      kickoff: "",
+      status: "finished",
+      homeScore: 5,
+      awayScore: 3,
+
+      goals: [
+        {
+          scorer: "前田マイケル純",
+          scorerNumber: 4,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "秋山健",
+          scorerNumber: 20,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "大森駿",
+          scorerNumber: 77,
+          assist: "吉川然",
+          assistNumber: 15
+        },
+        {
+          scorer: "秋山健",
+          scorerNumber: 20,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "川口ケン",
+          scorerNumber: 8,
+          assist: "今井裕太",
+          assistNumber: 10
+        }
+      ],
+
+      photos: [
+        {
+          image: "./matches/071901.jpg",
+          alt: "PAYASO戦 試合写真1"
+        },
+        {
+          image: "./matches/071902.jpg",
+          alt: "PAYASO戦 試合写真2"
+        },
+        {
+          image: "./matches/071903.jpg",
+          alt: "PAYASO戦 試合写真3"
+        }
+      ]
+    },
+
+
+    // 第10節
+
+    {
+      id: 10,
+      date: "2026-08-30",
+      competition: "県社会人リーグ 第10節",
+      homeTeam: "Develoop Yamato FC",
+      awayTeam: "かながわクラブ",
+      homeEmblem: "./images/emblem.jpg",
+      awayEmblem: "./images/opponents/kanagawa-club.jpg",
+      place: "大和ゆとりの森",
+      kickoff: "",
+      status: "finished",
+      homeScore: 2,
+      awayScore: 1,
+
+      goals: [
+        {
+          scorer: "田中恭汰",
+          scorerNumber: 12,
+          assist: "加藤恵太",
+          assistNumber: 29
+        },
+        {
+          scorer: "高木凌汰",
+          scorerNumber: 11,
+          assist: "川口ケン",
+          assistNumber: 8
+        }
+      ],
+
+      photos: [
+        {
+          image: "./matches/083001.jpg",
+          alt: "かながわクラブ戦 試合写真1"
+        },
+        {
+          image: "./matches/083002.jpg",
+          alt: "かながわクラブ戦 試合写真2"
+        },
+        {
+          image: "./matches/083003.jpg",
+          alt: "かながわクラブ戦 試合写真3"
+        }
+      ]
+    }
+  ],
+
+
+  // ==============================
+  // 2025シーズン
+  // 神奈川県社会人サッカー2部リーグ
+  // Aブロック3位
+  // ==============================
+
+  previousMatches: [
+
+    // 第1節
+
+    {
+      id: 202501,
+      date: "2025-04-13",
       competition:
-        "県社会人リーグ 第7節",
+        "神奈川県社会人2部リーグ Aブロック 第1節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "デスペルーホ藤沢",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/desperujo-fujisawa.jpg",
+
+      place:
+        "かもめパーク",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 2,
+      awayScore: 0,
+
+      goals: [
+        {
+          scorer: "圓大二郎",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "川口ケン",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第2節
+
+    {
+      id: 202502,
+      date: "2025-04-27",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第2節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "FC Girasole",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+  
+      
+
+      place:
+        "ツユキ及川球戯場",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 4,
+      awayScore: 2,
+
+      goals: [
+        {
+          scorer: "圓大二郎",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "大木健海",
+          scorerNumber: null,
+          assist: "今井裕太",
+          assistNumber: null
+        },
+        {
+          scorer: "吉川然",
+          scorerNumber: null,
+          assist: "圓大二郎",
+          assistNumber: null
+        },
+        {
+          scorer: "高木凌汰",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第3節
+
+    {
+      id: 202503,
+      date: "2025-05-11",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第3節",
 
       homeTeam:
         "Develoop Yamato FC",
@@ -590,78 +677,160 @@ const siteData = {
         "./images/opponents/yokosuka-ob.jpg",
 
       place:
-        "横須賀リーフ",
+        "横須賀リーフスタジアム",
 
       kickoff: "",
-
-      status:
-        "finished",
+      status: "finished",
 
       homeScore: 3,
-      awayScore: 4,
+      awayScore: 0,
 
       goals: [
         {
           scorer: "今井裕太",
-          scorerNumber: 10,
+          scorerNumber: null,
           assist: null,
           assistNumber: null
         },
-
         {
-          scorer: "圓大二郎",
-          scorerNumber: 14,
-          assist: "高木崚汰",
-          assistNumber: 11
+          scorer: "高木崚汰",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
         },
-
         {
-          scorer: "田中恭汰",
-          scorerNumber: 12,
-          assist: "秋山健",
-          assistNumber: 20
+          scorer: "杉崎勇哉",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
         }
       ],
 
-      photos: [
-        {
-          image:
-            "./matches/070501.jpg",
-
-          alt:
-            "横須賀高校OB戦 試合写真1"
-        },
-
-        {
-          image:
-            "./matches/070502.jpg",
-
-          alt:
-            "横須賀高校OB戦 試合写真2"
-        },
-
-        {
-          image:
-            "./matches/070503.jpg",
-
-          alt:
-            "横須賀高校OB戦 試合写真3"
-        }
-      ]
+      photos: []
     },
 
 
-    // ==============================
-    // 第8節
-    // ==============================
+    // 第4節
 
     {
-      id: 9,
-
-      date: "2026-07-19",
-
+      id: 202504,
+      date: "2025-05-25",
       competition:
-        "県社会人リーグ 第8節",
+        "神奈川県社会人2部リーグ Aブロック 第4節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "江の島フリッパーズ",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/enoshima-flippers.jpg",
+
+      place:
+        "大和ゆとりの森",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 3,
+      awayScore: 2,
+
+      goals: [
+        {
+          scorer: "川口ケン",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
+        },
+        {
+          scorer: "大森駿",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "大木健海",
+          scorerNumber: null,
+          assist: "久保田拓海",
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第5節
+
+    {
+      id: 202505,
+      date: "2025-06-01",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第5節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "Yokohama Puente",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/yokohama-puente.jpg",
+
+      place:
+        "かもめパーク",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 4,
+      awayScore: 0,
+
+      goals: [
+        {
+          scorer: "圓大二郎",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
+        },
+        {
+          scorer: "圓大二郎",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "川口ケン",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
+        },
+        {
+          scorer: "平林航祐",
+          scorerNumber: null,
+          assist: "秋山健",
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第6節
+
+    {
+      id: 202506,
+      date: "2025-06-15",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第6節",
 
       homeTeam:
         "Develoop Yamato FC",
@@ -679,89 +848,303 @@ const siteData = {
         "大和ゆとりの森",
 
       kickoff: "",
+      status: "finished",
 
-      status:
-        "finished",
-
-      homeScore: 5,
-      awayScore: 3,
+      homeScore: 1,
+      awayScore: 2,
 
       goals: [
         {
-          scorer: "前田マイケル純",
-          scorerNumber: 4,
-          assist: null,
+          scorer: "吉川然",
+          scorerNumber: null,
+          assist: "秋山健",
           assistNumber: null
-        },
-
-        {
-          scorer: "秋山健",
-          scorerNumber: 20,
-          assist: null,
-          assistNumber: null
-        },
-
-        {
-          scorer: "大森駿",
-          scorerNumber: 77,
-          assist: "吉川然",
-          assistNumber: 15
-        },
-
-        {
-          scorer: "秋山健",
-          scorerNumber: 20,
-          assist: null,
-          assistNumber: null
-        },
-
-        {
-          scorer: "川口ケン",
-          scorerNumber: 8,
-          assist: "今井裕太",
-          assistNumber: 10
         }
       ],
 
-      photos: [
-        {
-          image:
-            "./matches/071901.jpg",
-
-          alt:
-            "PAYASO戦 試合写真1"
-        },
-
-        {
-          image:
-            "./matches/071902.jpg",
-
-          alt:
-            "PAYASO戦 試合写真2"
-        },
-
-        {
-          image:
-            "./matches/071903.jpg",
-
-          alt:
-            "PAYASO戦 試合写真3"
-        }
-      ]
+      photos: []
     },
 
 
-    // ==============================
-    // 第10節
-    // ==============================
+    // 第7節
 
     {
-      id: 10,
-
-      date: "2026-08-30",
-
+      id: 202507,
+      date: "2025-07-06",
       competition:
-        "県社会人リーグ 第10節",
+        "神奈川県社会人2部リーグ Aブロック 第7節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "FCSOCIOS",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/fc-socios.jpg",
+
+      place:
+        "寄みやまグラウンド",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 3,
+      awayScore: 2,
+
+      goals: [
+        {
+          scorer: "秋山健",
+          scorerNumber: null,
+          assist: "圓大二郎",
+          assistNumber: null
+        },
+        {
+          scorer: "大木健海",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
+        },
+        {
+          scorer: "大森駿",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第8節
+
+    {
+      id: 202508,
+      date: "2025-07-13",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第8節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "Ringhio",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/ringhio.jpg",
+
+      place:
+        "大和ゆとりの森",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 0,
+      awayScore: 1,
+
+      goals: [],
+      photos: []
+    },
+
+
+    // 第9節
+
+    {
+      id: 202509,
+      date: "2025-09-07",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第9節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "久野FC",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/kuno-fc.jpg",
+
+      place:
+        "星槎箱根仙石原",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 0,
+      awayScore: 1,
+
+      goals: [],
+      photos: []
+    },
+
+
+    // 第10節
+
+    {
+      id: 202510,
+      date: "2025-09-14",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第10節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "FCSC",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/fcsc.jpg",
+
+      place:
+        "大和ゆとりの森",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 4,
+      awayScore: 1,
+
+      goals: [
+        {
+          scorer: "田中恭汰",
+          scorerNumber: null,
+          assist: "高木崚汰",
+          assistNumber: null
+        },
+        {
+          scorer: "吉川然",
+          scorerNumber: null,
+          assist: "平林航祐",
+          assistNumber: null
+        },
+        {
+          scorer: "川口ケン",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
+        },
+        {
+          scorer: "川口ケン",
+          scorerNumber: null,
+          assist: "吉川然",
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第11節
+
+    {
+      id: 202511,
+      date: "2025-09-28",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第11節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "Saltista橋本",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/saltista-hashimoto.jpg",
+
+      place:
+        "横山公園",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 1,
+      awayScore: 2,
+
+      goals: [
+        {
+          scorer: "吉川然",
+          scorerNumber: null,
+          assist: "秋山健",
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第12節
+
+    {
+      id: 202512,
+      date: "2025-10-26",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第12節",
+
+      homeTeam:
+        "Develoop Yamato FC",
+
+      awayTeam:
+        "瀬谷インターナショナル",
+
+      homeEmblem:
+        "./images/emblem.jpg",
+
+      awayEmblem:
+        "./images/opponents/seya-international.jpg",
+
+      place:
+        "大和ゆとりの森",
+
+      kickoff: "",
+      status: "finished",
+
+      homeScore: 2,
+      awayScore: 1,
+
+      goals: [
+        {
+          scorer: "田中恭汰",
+          scorerNumber: null,
+          assist: "高木崚汰",
+          assistNumber: null
+        },
+        {
+          scorer: "田中恭汰",
+          scorerNumber: null,
+          assist: "高木凌汰",
+          assistNumber: null
+        }
+      ],
+
+      photos: []
+    },
+
+
+    // 第13節
+
+    {
+      id: 202513,
+      date: "2025-11-09",
+      competition:
+        "神奈川県社会人2部リーグ Aブロック 第13節",
 
       homeTeam:
         "Develoop Yamato FC",
@@ -779,54 +1162,45 @@ const siteData = {
         "大和ゆとりの森",
 
       kickoff: "",
+      status: "finished",
 
-      status:
-        "finished",
-
-      homeScore: 2,
-      awayScore: 1,
+      homeScore: 5,
+      awayScore: 0,
 
       goals: [
         {
           scorer: "田中恭汰",
-          scorerNumber: 12,
-          assist: "加藤恵太",
-          assistNumber: 29
+          scorerNumber: null,
+          assist: "大森駿",
+          assistNumber: null
         },
-
         {
-          scorer: "高木凌汰",
-          scorerNumber: 11,
+          scorer: "吉川然",
+          scorerNumber: null,
+          assist: "大森駿",
+          assistNumber: null
+        },
+        {
+          scorer: "大森駿",
+          scorerNumber: null,
+          assist: "秋山健",
+          assistNumber: null
+        },
+        {
+          scorer: "大木健海",
+          scorerNumber: null,
           assist: "川口ケン",
-          assistNumber: 8
+          assistNumber: null
+        },
+        {
+          scorer: "川口ケン",
+          scorerNumber: null,
+          assist: null,
+          assistNumber: null
         }
       ],
 
-      photos: [
-        {
-          image:
-            "./matches/083001.jpg",
-
-          alt:
-            "かながわクラブ戦 試合写真1"
-        },
-
-        {
-          image:
-            "./matches/083002.jpg",
-
-          alt:
-            "かながわクラブ戦 試合写真2"
-        },
-
-        {
-          image:
-            "./matches/083003.jpg",
-
-          alt:
-            "かながわクラブ戦 試合写真3"
-        }
-      ]
+      photos: []
     }
   ],
 

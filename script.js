@@ -1,12 +1,136 @@
 document.addEventListener("DOMContentLoaded", function () {
   setTeamInformation();
+  linkPreviousSeasonData();
   setHeroSlideshow();
   displayNextMatch();
   displaySchedule();
   displayResults();
+  displayStatsRanking();
   displayPlayers();
   setMenu();
+  setScrollHeader();
 });
+
+
+// ==============================
+// 過去シーズンのデータ連携
+// ==============================
+
+function linkPreviousSeasonData() {
+
+  if (
+    !Array.isArray(siteData.players) ||
+    !Array.isArray(siteData.previousMatches)
+  ) {
+    return;
+  }
+
+
+  const playerNumbers =
+    new Map();
+
+
+  siteData.players.forEach(function (player) {
+
+    playerNumbers.set(
+      normalizePlayerName(player.name),
+      player.number
+    );
+
+  });
+
+
+  // 高木選手の表記揺れ
+
+  playerNumbers.set(
+    "高木崚汰",
+    11
+  );
+
+  playerNumbers.set(
+    "高木凌汰",
+    11
+  );
+
+
+  siteData.previousMatches.forEach(function (match) {
+
+    // 得点者・アシスト者の背番号
+
+    if (Array.isArray(match.goals)) {
+
+      match.goals.forEach(function (goal) {
+
+        goal.scorerNumber =
+          playerNumbers.get(
+            normalizePlayerName(goal.scorer)
+          ) ?? null;
+
+
+        goal.assistNumber =
+          goal.assist
+
+            ? playerNumbers.get(
+                normalizePlayerName(goal.assist)
+              ) ?? null
+
+            : null;
+
+      });
+
+    }
+
+
+    // 試合写真を3枚分自動設定
+
+    if (
+      !Array.isArray(match.photos) ||
+      match.photos.length === 0
+    ) {
+
+      const dateCode =
+        match.date
+          .slice(5)
+          .replace("-", "");
+
+
+      match.photos =
+        [1, 2, 3].map(function (number) {
+
+          const photoNumber =
+            String(number)
+              .padStart(2, "0");
+
+
+          return {
+
+            image:
+              `./matches/${dateCode}${photoNumber}.jpg`,
+
+            alt:
+              `${match.awayTeam}戦 試合写真${number}`
+
+          };
+
+        });
+
+    }
+
+  });
+
+}
+
+
+// ==============================
+// 名前の空白を削除
+// ==============================
+
+function normalizePlayerName(name) {
+
+  return String(name || "")
+    .replace(/[\s　]/g, "");
+
+}
 
 
 // ==============================
@@ -16,55 +140,85 @@ document.addEventListener("DOMContentLoaded", function () {
 function setTeamInformation() {
 
   const headerEmblem =
-    document.querySelector(".header .emblem-image");
+    document.querySelector(
+      ".header .emblem-image"
+    );
 
   const footerEmblem =
-    document.querySelector(".footer .emblem-image");
+    document.querySelector(
+      ".footer .emblem-image"
+    );
 
   const instagramLink =
-    document.getElementById("instagramLink");
+    document.getElementById(
+      "instagramLink"
+    );
 
   const xLink =
-    document.getElementById("xLink");
+    document.getElementById(
+      "xLink"
+    );
 
 
   if (headerEmblem) {
+
     headerEmblem.src =
       siteData.team.emblemImage;
+
   }
+
 
   if (footerEmblem) {
+
     footerEmblem.src =
       siteData.team.emblemImage;
+
   }
+
 
   if (instagramLink) {
+
     instagramLink.href =
       siteData.team.instagram;
+
   }
 
+
   if (xLink) {
+
     xLink.href =
       siteData.team.x;
+
   }
+
 }
 
 
 // ==============================
-// HERO SLIDESHOW
-// ふわっとクロスフェード
+// ヘッダー写真スライド
 // ==============================
 
 function setHeroSlideshow() {
 
   const heroImage =
-    document.querySelector(".hero-image");
+    document.querySelector(
+      ".hero-image"
+    );
 
-  if (!heroImage) return;
+  const dotsContainer =
+    document.querySelector(
+      ".hero-dots"
+    );
+
+
+  if (!heroImage) {
+    return;
+  }
 
 
   const images =
     siteData.team.heroImages;
+
 
   if (
     !Array.isArray(images) ||
@@ -75,36 +229,27 @@ function setHeroSlideshow() {
 
 
   let currentIndex = 0;
+  let isChanging = false;
+  let slideTimer = null;
 
+  const DISPLAY_TIME = 5000;
   const FADE_TIME = 2000;
-  const DISPLAY_TIME = 3500;
 
-
-  // ==============================
-  // 画像を先読み
-  // ==============================
 
   images.forEach(function (src) {
 
     const image =
       new Image();
 
-    image.src = src;
+    image.src =
+      src;
 
   });
 
 
-  // ==============================
-  // 1枚目を表示
-  // ==============================
-
   heroImage.style.backgroundImage =
-    `url("${images[currentIndex]}")`;
+    `url("${images[0]}")`;
 
-
-  // ==============================
-  // 次の画像用レイヤーを作成
-  // ==============================
 
   const nextLayer =
     document.createElement("div");
@@ -112,30 +257,106 @@ function setHeroSlideshow() {
   nextLayer.className =
     "hero-image hero-image-next";
 
-
   heroImage.insertAdjacentElement(
     "afterend",
     nextLayer
   );
 
 
-  // ==============================
-  // 写真切り替え
-  // ==============================
+  const dots =
+    images.map(function (_, index) {
 
-  function changeHeroImage() {
+      const dot =
+        document.createElement("button");
 
-    const nextIndex =
-      (currentIndex + 1) %
-      images.length;
+      dot.type =
+        "button";
+
+      dot.className =
+        "hero-dot";
+
+      dot.setAttribute(
+        "aria-label",
+        `${index + 1}枚目の写真を表示`
+      );
 
 
-    // 次の写真を準備
+      dot.addEventListener(
+        "click",
+        function () {
+
+          changeImage(index);
+          restartTimer();
+
+        }
+      );
+
+
+      if (dotsContainer) {
+
+        dotsContainer.appendChild(
+          dot
+        );
+
+      }
+
+
+      return dot;
+
+    });
+
+
+  function updateDots() {
+
+    dots.forEach(function (dot, index) {
+
+      const isActive =
+        index === currentIndex;
+
+
+      dot.classList.toggle(
+        "is-active",
+        isActive
+      );
+
+
+      if (isActive) {
+
+        dot.setAttribute(
+          "aria-current",
+          "true"
+        );
+
+      } else {
+
+        dot.removeAttribute(
+          "aria-current"
+        );
+
+      }
+
+    });
+
+  }
+
+
+  function changeImage(nextIndex) {
+
+    if (
+      isChanging ||
+      nextIndex === currentIndex
+    ) {
+      return;
+    }
+
+
+    isChanging = true;
+
+
     nextLayer.style.backgroundImage =
       `url("${images[nextIndex]}")`;
 
 
-    // 次のフレームでふわっと表示
     requestAnimationFrame(function () {
 
       requestAnimationFrame(function () {
@@ -149,10 +370,8 @@ function setHeroSlideshow() {
     });
 
 
-    // フェード終了後
-    setTimeout(function () {
+    window.setTimeout(function () {
 
-      // 下のレイヤーも次の画像へ
       heroImage.style.backgroundImage =
         `url("${images[nextIndex]}")`;
 
@@ -161,33 +380,63 @@ function setHeroSlideshow() {
         nextIndex;
 
 
-      // 上のレイヤーを透明に戻す
+      updateDots();
+
+
       nextLayer.classList.remove(
         "is-visible"
       );
 
 
-      // 次の切り替え
-      setTimeout(
-        changeHeroImage,
-        DISPLAY_TIME
-      );
+      isChanging = false;
 
     }, FADE_TIME);
 
   }
 
 
-  // 最初の写真を少し見せてから開始
-  setTimeout(
-    changeHeroImage,
-    DISPLAY_TIME
-  );
+  function showNextImage() {
+
+    const nextIndex =
+      (currentIndex + 1) %
+      images.length;
+
+
+    changeImage(
+      nextIndex
+    );
+
+  }
+
+
+  function restartTimer() {
+
+    if (slideTimer) {
+
+      window.clearInterval(
+        slideTimer
+      );
+
+    }
+
+
+    slideTimer =
+      window.setInterval(
+        showNextImage,
+        DISPLAY_TIME
+      );
+
+  }
+
+
+  updateDots();
+  restartTimer();
+
 }
 
 
 // ==============================
-// NEXT MATCH
+// 次の試合
 // ==============================
 
 function displayNextMatch() {
@@ -197,19 +446,29 @@ function displayNextMatch() {
       "nextMatchContainer"
     );
 
-  if (!container) return;
+
+  if (!container) {
+    return;
+  }
 
 
   const matches =
     siteData.matches
       .filter(function (match) {
-        return match.status === "upcoming";
+
+        return (
+          match.status ===
+          "upcoming"
+        );
+
       })
       .sort(function (a, b) {
+
         return (
           new Date(a.date) -
           new Date(b.date)
         );
+
       });
 
 
@@ -226,11 +485,14 @@ function displayNextMatch() {
     `;
 
     return;
+
   }
 
 
   const date =
-    getDateInformation(match.date);
+    getDateInformation(
+      match.date
+    );
 
 
   container.innerHTML = `
@@ -286,7 +548,13 @@ function displayNextMatch() {
 
           ${
             match.kickoff
-              ? `<br>${match.kickoff} KICK OFF`
+
+              ? `
+                <br>
+                ${match.kickoff}
+                KICK OFF
+              `
+
               : ""
           }
 
@@ -296,11 +564,12 @@ function displayNextMatch() {
 
     </article>
   `;
+
 }
 
 
 // ==============================
-// SCHEDULE
+// 試合予定
 // ==============================
 
 function displaySchedule() {
@@ -310,19 +579,29 @@ function displaySchedule() {
       "scheduleContainer"
     );
 
-  if (!container) return;
+
+  if (!container) {
+    return;
+  }
 
 
   const matches =
     siteData.matches
       .filter(function (match) {
-        return match.status === "upcoming";
+
+        return (
+          match.status ===
+          "upcoming"
+        );
+
       })
       .sort(function (a, b) {
+
         return (
           new Date(a.date) -
           new Date(b.date)
         );
+
       });
 
 
@@ -335,6 +614,7 @@ function displaySchedule() {
     `;
 
     return;
+
   }
 
 
@@ -343,7 +623,9 @@ function displaySchedule() {
       .map(function (match) {
 
         const date =
-          getDateInformation(match.date);
+          getDateInformation(
+            match.date
+          );
 
 
         return `
@@ -388,7 +670,13 @@ function displaySchedule() {
 
                 ${
                   match.kickoff
-                    ? ` / ${match.kickoff} KICK OFF`
+
+                    ? `
+                      /
+                      ${match.kickoff}
+                      KICK OFF
+                    `
+
                     : ""
                 }
 
@@ -406,33 +694,147 @@ function displaySchedule() {
 
       })
       .join("");
+
 }
 
 
 // ==============================
-// RESULTS
+// 試合結果
 // ==============================
 
 function displayResults() {
+
+  const seasonButtons =
+    document.querySelectorAll(
+      ".season-tab"
+    );
+
+
+  seasonButtons.forEach(function (button) {
+
+    button.addEventListener(
+      "click",
+      function () {
+
+        seasonButtons.forEach(function (item) {
+
+          const isActive =
+            item === button;
+
+
+          item.classList.toggle(
+            "is-active",
+            isActive
+          );
+
+
+          item.setAttribute(
+            "aria-pressed",
+            String(isActive)
+          );
+
+        });
+
+
+        renderResults(
+          button.dataset.season
+        );
+
+      }
+    );
+
+  });
+
+
+  renderResults(
+    "2026"
+  );
+
+}
+
+
+// ==============================
+// 選択したシーズンの結果
+// ==============================
+
+function renderResults(
+  selectedSeason
+) {
 
   const container =
     document.getElementById(
       "resultsContainer"
     );
 
-  if (!container) return;
+
+  if (!container) {
+    return;
+  }
+
+
+  const summary =
+    document.getElementById(
+      "seasonResultSummary"
+    );
+
+
+  const sourceMatches =
+    selectedSeason === "2025"
+
+      ? (
+          siteData.previousMatches ||
+          []
+        )
+
+      : siteData.matches;
+
+
+  if (summary) {
+
+    summary.innerHTML =
+      selectedSeason === "2025"
+
+        ? `
+          <span>
+            2025 SEASON RESULT
+          </span>
+
+          <strong>
+            神奈川県社会人サッカー2部リーグ
+            Aブロック 3位
+          </strong>
+        `
+
+        : `
+          <span>
+            2026 SEASON
+          </span>
+
+          <strong>
+            神奈川県社会人サッカー2部リーグ
+          </strong>
+        `;
+
+  }
 
 
   const matches =
-    siteData.matches
+    sourceMatches
       .filter(function (match) {
-        return match.status === "finished";
+
+        return (
+          match.status ===
+          "finished"
+        );
+
       })
       .sort(function (a, b) {
+
         return (
           new Date(b.date) -
           new Date(a.date)
         );
+
       });
 
 
@@ -445,6 +847,7 @@ function displayResults() {
     `;
 
     return;
+
   }
 
 
@@ -453,137 +856,26 @@ function displayResults() {
       .map(function (match) {
 
         const date =
-          getDateInformation(match.date);
+          getDateInformation(
+            match.date
+          );
 
         const result =
-          getResultInformation(match);
+          getResultInformation(
+            match
+          );
 
-
-        // ==============================
-        // 得点・アシスト
-        // ==============================
 
         const goalsHtml =
-          Array.isArray(match.goals) &&
-          match.goals.length > 0
+          createGoalsHtml(
+            match.goals
+          );
 
-            ? match.goals
-                .map(function (goal) {
-
-                  const assistHtml =
-                    goal.assist
-
-                      ? `
-                        <div class="assist-player">
-
-                          <span class="detail-type">
-                            ASSIST
-                          </span>
-
-                          <strong class="detail-number">
-                            #${goal.assistNumber}
-                          </strong>
-
-                          <span>
-                            ${goal.assist}
-                          </span>
-
-                        </div>
-                      `
-
-                      : `
-                        <div class="assist-player no-assist">
-
-                          <span class="detail-type">
-                            ASSIST
-                          </span>
-
-                          <span>
-                            -
-                          </span>
-
-                        </div>
-                      `;
-
-
-                  return `
-
-                    <div class="goal-detail">
-
-                      <div class="goal-player">
-
-                        <span class="detail-type">
-                          GOAL
-                        </span>
-
-                        <strong class="detail-number">
-                          #${goal.scorerNumber}
-                        </strong>
-
-                        <span>
-                          ${goal.scorer}
-                        </span>
-
-                      </div>
-
-                      ${assistHtml}
-
-                    </div>
-                  `;
-
-                })
-                .join("")
-
-            : `
-              <p class="no-goal-data">
-                得点情報はありません。
-              </p>
-            `;
-
-
-        // ==============================
-        // 写真
-        // ==============================
 
         const photosHtml =
-          Array.isArray(match.photos) &&
-          match.photos.length > 0
-
-            ? `
-              <div class="detail-photo-title">
-                MATCH PHOTOS
-              </div>
-
-              <div class="detail-photos">
-
-                ${match.photos
-                  .map(function (photo) {
-
-                    return `
-
-                      <div class="match-photo-item">
-
-                        <img
-                          src="${photo.image}"
-                          alt="${photo.alt}"
-                          loading="lazy"
-                          onerror="showMatchNoImage(this)"
-                        >
-
-                        <span class="match-no-image">
-                          NO IMAGE
-                        </span>
-
-                      </div>
-                    `;
-
-                  })
-                  .join("")}
-
-              </div>
-            `
-
-            : "";
+          createMatchPhotosHtml(
+            match.photos
+          );
 
 
         return `
@@ -621,7 +913,9 @@ function displayResults() {
 
                     ${match.homeScore}
 
-                    <i>-</i>
+                    <i>
+                      -
+                    </i>
 
                     ${match.awayScore}
 
@@ -679,9 +973,7 @@ function displayResults() {
 
 
                 <div class="goal-details">
-
                   ${goalsHtml}
-
                 </div>
 
 
@@ -698,9 +990,181 @@ function displayResults() {
       .join("");
 
 
-  // ==============================
-  // 試合詳細 開閉
-  // ==============================
+  setResultAccordion(
+    container
+  );
+
+}
+
+
+// ==============================
+// 得点・アシストHTML
+// ==============================
+
+function createGoalsHtml(goals) {
+
+  if (
+    !Array.isArray(goals) ||
+    goals.length === 0
+  ) {
+
+    return `
+      <p class="no-goal-data">
+        得点情報はありません。
+      </p>
+    `;
+
+  }
+
+
+  return goals
+    .map(function (goal) {
+
+      const scorerNumberHtml =
+        goal.scorerNumber
+
+          ? `
+            <strong class="detail-number">
+              #${goal.scorerNumber}
+            </strong>
+          `
+
+          : "";
+
+
+      const assistNumberHtml =
+        goal.assistNumber
+
+          ? `
+            <strong class="detail-number">
+              #${goal.assistNumber}
+            </strong>
+          `
+
+          : "";
+
+
+      const assistHtml =
+        goal.assist
+
+          ? `
+            <div class="assist-player">
+
+              <span class="detail-type">
+                ASSIST
+              </span>
+
+              ${assistNumberHtml}
+
+              <span>
+                ${goal.assist}
+              </span>
+
+            </div>
+          `
+
+          : `
+            <div class="assist-player no-assist">
+
+              <span class="detail-type">
+                ASSIST
+              </span>
+
+              <span>
+                -
+              </span>
+
+            </div>
+          `;
+
+
+      return `
+
+        <div class="goal-detail">
+
+          <div class="goal-player">
+
+            <span class="detail-type">
+              GOAL
+            </span>
+
+            ${scorerNumberHtml}
+
+            <span>
+              ${goal.scorer}
+            </span>
+
+          </div>
+
+          ${assistHtml}
+
+        </div>
+      `;
+
+    })
+    .join("");
+
+}
+
+
+// ==============================
+// 試合写真HTML
+// ==============================
+
+function createMatchPhotosHtml(photos) {
+
+  if (
+    !Array.isArray(photos) ||
+    photos.length === 0
+  ) {
+    return "";
+  }
+
+
+  return `
+
+    <div class="detail-photo-title">
+      MATCH PHOTOS
+    </div>
+
+
+    <div class="detail-photos">
+
+      ${photos
+        .map(function (photo) {
+
+          return `
+
+            <div class="match-photo-item">
+
+              <img
+                src="${photo.image}"
+                alt="${photo.alt}"
+                loading="lazy"
+                onerror="showMatchNoImage(this)"
+              >
+
+              <span class="match-no-image">
+                NO IMAGE
+              </span>
+
+            </div>
+          `;
+
+        })
+        .join("")}
+
+    </div>
+  `;
+
+}
+
+
+// ==============================
+// 試合詳細の開閉
+// ==============================
+
+function setResultAccordion(container) {
 
   const resultButtons =
     container.querySelectorAll(
@@ -708,57 +1172,580 @@ function displayResults() {
     );
 
 
-  resultButtons.forEach(
-    function (button) {
+  resultButtons.forEach(function (button) {
 
-      button.addEventListener(
-        "click",
-        function () {
+    button.addEventListener(
+      "click",
+      function () {
 
-          const card =
-            button.closest(
-              ".result-card"
-            );
-
-          if (!card) return;
-
-
-          const isOpen =
-            card.classList.toggle(
-              "detail-open"
-            );
-
-
-          button.setAttribute(
-            "aria-expanded",
-            String(isOpen)
+        const card =
+          button.closest(
+            ".result-card"
           );
 
 
-          const arrow =
-            button.querySelector(
-              ".result-arrow"
-            );
+        if (!card) {
+          return;
+        }
 
 
-          if (arrow) {
+        const isOpen =
+          card.classList.toggle(
+            "detail-open"
+          );
 
-            arrow.textContent =
-              isOpen
-                ? "−"
-                : "＋";
-          }
+
+        button.setAttribute(
+          "aria-expanded",
+          String(isOpen)
+        );
+
+
+        const arrow =
+          button.querySelector(
+            ".result-arrow"
+          );
+
+
+        if (arrow) {
+
+          arrow.textContent =
+            isOpen
+              ? "−"
+              : "＋";
 
         }
-      );
 
-    }
-  );
+      }
+    );
+
+  });
+
 }
 
 
 // ==============================
-// TEAM
+// スタッツランキング
+// ==============================
+
+function displayStatsRanking() {
+
+  const seasonButtons =
+    document.querySelectorAll(
+      ".stats-season-tab"
+    );
+
+
+  if (seasonButtons.length === 0) {
+    return;
+  }
+
+
+  seasonButtons.forEach(function (button) {
+
+    button.addEventListener(
+      "click",
+      function () {
+
+        seasonButtons.forEach(function (item) {
+
+          const isActive =
+            item === button;
+
+
+          item.classList.toggle(
+            "is-active",
+            isActive
+          );
+
+
+          item.setAttribute(
+            "aria-pressed",
+            String(isActive)
+          );
+
+        });
+
+
+        renderStatsRanking(
+          button.dataset.statsSeason
+        );
+
+      }
+    );
+
+  });
+
+
+  renderStatsRanking(
+    "2026"
+  );
+
+}
+
+
+// ==============================
+// ランキングを集計・表示
+// ==============================
+
+function renderStatsRanking(
+  selectedSeason
+) {
+
+  const goalContainer =
+    document.getElementById(
+      "goalRankingContainer"
+    );
+
+  const assistContainer =
+    document.getElementById(
+      "assistRankingContainer"
+    );
+
+
+  if (
+    !goalContainer ||
+    !assistContainer
+  ) {
+    return;
+  }
+
+
+  const currentMatches =
+    Array.isArray(siteData.matches)
+
+      ? siteData.matches
+
+      : [];
+
+
+  const previousMatches =
+    Array.isArray(siteData.previousMatches)
+
+      ? siteData.previousMatches
+
+      : [];
+
+
+  let targetMatches;
+
+
+  if (selectedSeason === "2025") {
+
+    targetMatches =
+      previousMatches;
+
+  } else if (selectedSeason === "all") {
+
+    targetMatches = [
+      ...currentMatches,
+      ...previousMatches
+    ];
+
+  } else {
+
+    targetMatches =
+      currentMatches;
+
+  }
+
+
+  targetMatches =
+    targetMatches.filter(function (match) {
+
+      return (
+        match.status ===
+        "finished"
+      );
+
+    });
+
+
+  const rosterMap =
+    createStatsRosterMap();
+
+  const goalCounts =
+    new Map();
+
+  const assistCounts =
+    new Map();
+
+
+  targetMatches.forEach(function (match) {
+
+    if (!Array.isArray(match.goals)) {
+      return;
+    }
+
+
+    match.goals.forEach(function (goal) {
+
+      addStatsCount(
+        goalCounts,
+        goal.scorer,
+        rosterMap
+      );
+
+
+      if (goal.assist) {
+
+        addStatsCount(
+          assistCounts,
+          goal.assist,
+          rosterMap
+        );
+
+      }
+
+    });
+
+  });
+
+
+  goalContainer.innerHTML =
+    createStatsRankingHtml(
+      goalCounts,
+      "goal"
+    );
+
+
+  assistContainer.innerHTML =
+    createStatsRankingHtml(
+      assistCounts,
+      "assist"
+    );
+
+}
+
+
+// ==============================
+// ランキング用の名前統一
+// ==============================
+
+function normalizeStatsName(name) {
+
+  const normalized =
+    normalizePlayerName(name);
+
+
+  if (
+    normalized === "高木崚汰" ||
+    normalized === "高木凌汰"
+  ) {
+
+    return "高木峻汰";
+
+  }
+
+
+  return normalized;
+
+}
+
+
+// ==============================
+// 選手情報とランキングを連携
+// ==============================
+
+function createStatsRosterMap() {
+
+  const rosterMap =
+    new Map();
+
+
+  if (!Array.isArray(siteData.players)) {
+    return rosterMap;
+  }
+
+
+  siteData.players.forEach(function (player) {
+
+    rosterMap.set(
+      normalizeStatsName(player.name),
+      player
+    );
+
+  });
+
+
+  return rosterMap;
+
+}
+
+
+// ==============================
+// 得点・アシスト数を加算
+// ==============================
+
+function addStatsCount(
+  statsMap,
+  playerName,
+  rosterMap
+) {
+
+  const normalizedName =
+    normalizeStatsName(
+      playerName
+    );
+
+  const player =
+    rosterMap.get(
+      normalizedName
+    );
+
+  const key =
+    player
+
+      ? `number-${player.number}`
+
+      : `name-${normalizedName}`;
+
+
+  if (!statsMap.has(key)) {
+
+    statsMap.set(key, {
+
+      name:
+        player
+          ? player.name
+          : playerName,
+
+      number:
+        player
+          ? player.number
+          : null,
+
+      image:
+        player
+          ? player.faceImage
+          : "",
+
+      count: 0
+
+    });
+
+  }
+
+
+  statsMap.get(key).count += 1;
+
+}
+
+
+// ==============================
+// ランキングHTML
+// ==============================
+
+function createStatsRankingHtml(
+  statsMap,
+  type
+) {
+
+  const sortedPlayers =
+    Array.from(
+      statsMap.values()
+    )
+      .sort(function (a, b) {
+
+        if (b.count !== a.count) {
+
+          return (
+            b.count -
+            a.count
+          );
+
+        }
+
+
+        return String(a.name)
+          .localeCompare(
+            String(b.name),
+            "ja"
+          );
+
+      });
+
+
+  let previousCount = null;
+  let currentRank = 0;
+
+
+  const rankedPlayers =
+    sortedPlayers
+      .map(function (player, index) {
+
+        if (
+          player.count !==
+          previousCount
+        ) {
+
+          currentRank =
+            index + 1;
+
+          previousCount =
+            player.count;
+
+        }
+
+
+        return {
+          ...player,
+          rank: currentRank
+        };
+
+      })
+      .filter(function (player) {
+
+        return (
+          player.rank <= 3
+        );
+
+      });
+
+
+  if (rankedPlayers.length === 0) {
+
+    return `
+      <div class="stats-empty">
+        記録はまだありません。
+      </div>
+    `;
+
+  }
+
+
+  const icon =
+    type === "goal"
+
+      ? "⚽"
+
+      : "👟";
+
+
+  const unit =
+    type === "goal"
+
+      ? "GOALS"
+
+      : "ASSISTS";
+
+
+  return rankedPlayers
+    .map(function (player) {
+
+      const imageHtml =
+        player.image
+
+          ? `
+            <img
+              src="${player.image}"
+              alt="${player.name}の写真"
+              loading="lazy"
+              onerror="showStatsNoImage(this)"
+            >
+          `
+
+          : "";
+
+
+      return `
+
+        <article
+          class="stats-card stats-rank-${player.rank}"
+        >
+
+          <div class="stats-rank-number">
+            ${player.rank}
+          </div>
+
+
+          <div class="stats-player-photo">
+
+            ${imageHtml}
+
+            <span>
+              NO IMAGE
+            </span>
+
+          </div>
+
+
+          <div class="stats-player-information">
+
+            <span class="stats-player-number">
+
+              ${
+                player.number
+
+                  ? `#${player.number}`
+
+                  : "PLAYER"
+              }
+
+            </span>
+
+
+            <strong>
+              ${player.name}
+            </strong>
+
+          </div>
+
+
+          <div class="stats-count">
+
+            <span aria-hidden="true">
+              ${icon}
+            </span>
+
+            <strong>
+              ${player.count}
+            </strong>
+
+            <small>
+              ${unit}
+            </small>
+
+          </div>
+
+        </article>
+      `;
+
+    })
+    .join("");
+
+}
+
+
+// ==============================
+// ランキング写真がない場合
+// ==============================
+
+function showStatsNoImage(image) {
+
+  image.style.display =
+    "none";
+
+
+  const box =
+    image.closest(
+      ".stats-player-photo"
+    );
+
+
+  if (box) {
+
+    box.classList.add(
+      "no-image-active"
+    );
+
+  }
+
+}
+
+
+// ==============================
+// チーム表示
 // ==============================
 
 function createTeam(
@@ -766,14 +1753,24 @@ function createTeam(
   emblem
 ) {
 
+  const emblemHtml =
+    emblem
+
+      ? `
+        <img
+          src="${emblem}"
+          alt="${name} エンブレム"
+        >
+      `
+
+      : "";
+
+
   return `
 
     <div class="next-team">
 
-      <img
-        src="${emblem}"
-        alt="${name} エンブレム"
-      >
+      ${emblemHtml}
 
       <strong>
         ${name}
@@ -781,11 +1778,12 @@ function createTeam(
 
     </div>
   `;
+
 }
 
 
 // ==============================
-// MINI TEAM
+// 小さいチーム表示
 // ==============================
 
 function createMiniTeam(
@@ -793,15 +1791,25 @@ function createMiniTeam(
   emblem
 ) {
 
+  const emblemHtml =
+    emblem
+
+      ? `
+        <img
+          src="${emblem}"
+          alt="${name} エンブレム"
+          loading="lazy"
+        >
+      `
+
+      : "";
+
+
   return `
 
     <div class="mini-team">
 
-      <img
-        src="${emblem}"
-        alt="${name} エンブレム"
-        loading="lazy"
-      >
+      ${emblemHtml}
 
       <span>
         ${name}
@@ -809,11 +1817,12 @@ function createMiniTeam(
 
     </div>
   `;
+
 }
 
 
 // ==============================
-// DATE
+// 日付HTML
 // ==============================
 
 function createDateHtml(
@@ -839,11 +1848,12 @@ function createDateHtml(
 
     </time>
   `;
+
 }
 
 
 // ==============================
-// DATE INFORMATION
+// 日付情報
 // ==============================
 
 function getDateInformation(
@@ -902,12 +1912,14 @@ function getDateInformation(
       weeks[
         date.getDay()
       ]
+
   };
+
 }
 
 
 // ==============================
-// WIN / LOSE / DRAW
+// 勝敗判定
 // ==============================
 
 function getResultInformation(
@@ -923,7 +1935,8 @@ function getResultInformation(
 
 
   if (
-    match.homeTeam === teamName
+    match.homeTeam ===
+    teamName
   ) {
 
     teamScore =
@@ -939,6 +1952,7 @@ function getResultInformation(
 
     opponentScore =
       match.homeScore;
+
   }
 
 
@@ -951,6 +1965,7 @@ function getResultInformation(
       text: "WIN",
       className: "win"
     };
+
   }
 
 
@@ -963,6 +1978,7 @@ function getResultInformation(
       text: "LOSE",
       className: "lose"
     };
+
   }
 
 
@@ -970,11 +1986,12 @@ function getResultInformation(
     text: "DRAW",
     className: "draw"
   };
+
 }
 
 
 // ==============================
-// PLAYERS
+// 選手表示
 // ==============================
 
 function displayPlayers() {
@@ -984,11 +2001,14 @@ function displayPlayers() {
       "playersContainer"
     );
 
-  if (!container) return;
+
+  if (!container) {
+    return;
+  }
 
 
   if (
-    !siteData.players ||
+    !Array.isArray(siteData.players) ||
     siteData.players.length === 0
   ) {
 
@@ -999,6 +2019,7 @@ function displayPlayers() {
     `;
 
     return;
+
   }
 
 
@@ -1067,19 +2088,25 @@ function displayPlayers() {
                 </h3>
 
                 <span>
+
                   ${player.englishName}
+
                   /
+
                   ${player.position}
+
                 </span>
 
 
                 ${
                   player.comment
+
                     ? `
                       <p>
                         ${player.comment}
                       </p>
                     `
+
                     : ""
                 }
 
@@ -1098,85 +2125,182 @@ function displayPlayers() {
     .querySelectorAll(
       ".player-photo"
     )
-    .forEach(
-      function (button) {
+    .forEach(function (button) {
 
-        button.addEventListener(
-          "click",
-          function () {
+      button.addEventListener(
+        "click",
+        function () {
 
-            const card =
-              button.closest(
-                ".player-card"
-              );
-
-            if (!card) return;
-
-
-            card.classList.toggle(
-              "show-play-photo"
+          const card =
+            button.closest(
+              ".player-card"
             );
 
-          }
-        );
 
-      }
-    );
+          if (!card) {
+            return;
+          }
+
+
+          card.classList.toggle(
+            "show-play-photo"
+          );
+
+        }
+      );
+
+    });
+
 }
 
 
 // ==============================
-// PLAYER NO IMAGE
+// 選手画像がない場合
 // ==============================
 
-function showPlayerNoImage(
-  image
-) {
+function showPlayerNoImage(image) {
 
   image.style.display =
     "none";
+
 
   const box =
     image.closest(
       ".player-image-box"
     );
 
+
   if (box) {
 
     box.classList.add(
       "no-image-active"
     );
+
   }
+
 }
 
 
 // ==============================
-// MATCH NO IMAGE
+// 試合画像がない場合
 // ==============================
 
-function showMatchNoImage(
-  image
-) {
+function showMatchNoImage(image) {
 
   image.style.display =
     "none";
+
 
   const box =
     image.closest(
       ".match-photo-item"
     );
 
+
   if (box) {
 
     box.classList.add(
       "no-image-active"
     );
+
   }
+
 }
 
 
 // ==============================
-// MENU
+// スクロール後のヘッダー
+// ==============================
+
+function setScrollHeader() {
+
+  const header =
+    document.querySelector(
+      ".header"
+    );
+
+  const navigation =
+    document.getElementById(
+      "navigation"
+    );
+
+  const button =
+    document.getElementById(
+      "menuButton"
+    );
+
+
+  if (!header) {
+    return;
+  }
+
+
+  function updateHeader() {
+
+    const isScrolled =
+      window.scrollY > 80;
+
+
+    header.classList.toggle(
+      "scrolled",
+      isScrolled
+    );
+
+
+    if (
+      !isScrolled &&
+      navigation &&
+      navigation.classList.contains(
+        "open"
+      )
+    ) {
+
+      navigation.classList.remove(
+        "open"
+      );
+
+      header.classList.remove(
+        "menu-active"
+      );
+
+      document.body.classList.remove(
+        "menu-open"
+      );
+
+
+      if (button) {
+
+        button.textContent =
+          "MENU";
+
+        button.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
+
+    }
+
+  }
+
+
+  updateHeader();
+
+
+  window.addEventListener(
+    "scroll",
+    updateHeader,
+    {
+      passive: true
+    }
+  );
+
+}
+
+
+// ==============================
+// スマホメニュー
 // ==============================
 
 function setMenu() {
@@ -1227,38 +2351,70 @@ function setMenu() {
         open
       );
 
+
+      const header =
+        document.querySelector(
+          ".header"
+        );
+
+
+      if (header) {
+
+        header.classList.toggle(
+          "menu-active",
+          open
+        );
+
+      }
+
     }
   );
 
 
   navigation
     .querySelectorAll("a")
-    .forEach(
-      function (link) {
+    .forEach(function (link) {
 
-        link.addEventListener(
-          "click",
-          function () {
+      link.addEventListener(
+        "click",
+        function () {
 
-            navigation.classList.remove(
-              "open"
+          navigation.classList.remove(
+            "open"
+          );
+
+          document.body.classList.remove(
+            "menu-open"
+          );
+
+
+          const header =
+            document.querySelector(
+              ".header"
             );
 
-            document.body.classList.remove(
-              "menu-open"
-            );
 
-            button.textContent =
-              "MENU";
+          if (header) {
 
-            button.setAttribute(
-              "aria-expanded",
-              "false"
+            header.classList.remove(
+              "menu-active"
             );
 
           }
-        );
 
-      }
-    );
+
+          button.textContent =
+            "MENU";
+
+
+          button.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        }
+      );
+
+    });
+
 }

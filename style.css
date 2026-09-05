@@ -4,7 +4,6 @@
   --black: #050505;
   --black-light: #171717;
   --red: #e10600;
-  --dark-red: #a80000;
   --white: #f7f7f7;
   --gray: #747474;
   --light-gray: #e9e9e9;
@@ -23,7 +22,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 78px;
+  scroll-padding-top: 92px;
 }
 
 body {
@@ -59,20 +58,28 @@ img {
 ============================== */
 
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  right: 0;
+  left: 0;
   z-index: 100;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  height: 78px;
+  height: 92px;
 
   padding: 0 5vw;
 
   color: white;
-  background: var(--black);
+  background: rgba(5, 5, 5, 0.96);
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+
+  transition:
+    background-color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 .team-logo {
@@ -83,15 +90,15 @@ img {
 }
 
 .emblem-image {
-  width: 56px;
-  height: 56px;
+  width: 68px;
+  height: 68px;
 
   object-fit: contain;
 }
 
 .logo-text {
   font-family: "Barlow Condensed", sans-serif;
-  font-size: 1.25rem;
+  font-size: clamp(1.7rem, 2.2vw, 2.35rem);
   font-weight: 800;
 
   letter-spacing: 0.08em;
@@ -102,7 +109,7 @@ img {
 
   color: var(--red);
 
-  font-size: 0.65rem;
+  font-size: 0.78rem;
 
   letter-spacing: 0.18em;
 }
@@ -117,6 +124,23 @@ img {
   font-weight: 700;
 
   letter-spacing: 0.1em;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.header.scrolled .navigation {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .navigation a {
@@ -171,7 +195,9 @@ img {
 .hero {
   position: relative;
 
-  min-height: calc(100vh - 78px);
+  min-height: 100vh;
+
+  padding-top: 92px;
 
   color: white;
   background: var(--black);
@@ -202,30 +228,6 @@ img {
     transform 6s ease;
 
   animation: photoFadeIn 1.5s ease-out both;
-}
-
-.hero-image.hero-changing {
-  opacity: 0.12;
-  transform: scale(1.07);
-}
-/* スライド切り替え */
-
-/* ==============================
-   HERO CROSS FADE
-============================== */
-
-.hero-image {
-  position: absolute;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  opacity: 1;
 }
 
 .hero-image-next {
@@ -265,12 +267,10 @@ img {
   background:
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.88) 0%,
-      rgba(0, 0, 0, 0.72) 22%,
-      rgba(0, 0, 0, 0.48) 42%,
-      rgba(0, 0, 0, 0.20) 62%,
-      rgba(0, 0, 0, 0.04) 82%,
-      rgba(0, 0, 0, 0) 100%
+      rgba(0, 0, 0, 0.76) 0%,
+      rgba(0, 0, 0, 0.50) 38%,
+      rgba(0, 0, 0, 0.20) 72%,
+      rgba(0, 0, 0, 0.08) 100%
     ),
     linear-gradient(
       0deg,
@@ -291,16 +291,18 @@ img {
   display: flex;
   flex-direction: column;
 
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 
-  width: min(700px, 58%);
+  width: 100%;
 
-  min-height: calc(100vh - 78px);
+  min-height: calc(100vh - 92px);
 
-  padding: 70px 6vw;
+  padding: 70px 4vw;
 
   background: transparent;
+
+  text-align: center;
 
   animation: heroFadeUp 1.2s ease-out 2s both;
 }
@@ -364,24 +366,29 @@ img {
 
   font-family: "Barlow Condensed", sans-serif;
 
-  font-size: clamp(4.5rem, 7.5vw, 8.5rem);
+  width: 100%;
+
+  font-size: clamp(5.5rem, 11vw, 12rem);
 
   font-weight: 800;
 
-  line-height: 0.78;
+  line-height: 0.76;
 
   letter-spacing: -0.035em;
 
   text-shadow:
-    0 4px 18px rgba(0, 0, 0, 0.45);
+    0 5px 0 rgba(0, 0, 0, 0.82),
+    0 10px 32px rgba(0, 0, 0, 0.95);
 }
 
 .hero h1 span {
-  color: transparent;
+  color: var(--red);
 
-  -webkit-text-stroke: 2px var(--red);
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.75);
 
-  text-shadow: none;
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.75),
+    0 9px 25px rgba(0, 0, 0, 0.9);
 }
 
 .hero-description {
@@ -397,29 +404,86 @@ img {
     0 2px 10px rgba(0, 0, 0, 0.75);
 }
 
-.main-button {
-  display: inline-flex;
+.hero-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 
-  align-items: center;
-  justify-content: space-between;
+  gap: 10px;
 
-  gap: 60px;
+  max-width: 980px;
 
-  padding: 17px 22px;
-
-  color: white;
-  background: var(--red);
-
-  font-size: 0.9rem;
-  font-weight: 800;
-
-  transition: 0.2s;
+  margin-top: 4px;
 }
 
-.main-button:hover {
-  background: var(--dark-red);
+.hero-menu a {
+  min-width: 142px;
 
+  padding: 13px 18px;
+
+  color: white;
+  background: rgba(0, 0, 0, 0.48);
+
+  border: 1px solid rgba(255, 255, 255, 0.58);
+
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  backdrop-filter: blur(5px);
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.hero-menu a:hover {
+  color: white;
+  background: var(--red);
+  border-color: var(--red);
   transform: translateY(-3px);
+}
+
+.hero-dots {
+  display: flex;
+  justify-content: center;
+
+  gap: 11px;
+
+  min-height: 18px;
+
+  margin-top: 25px;
+}
+
+.hero-dot {
+  width: 10px;
+  height: 10px;
+
+  padding: 0;
+
+  background: rgba(255, 255, 255, 0.58);
+
+  border: 1px solid white;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.hero-dot.is-active {
+  width: 32px;
+
+  background: var(--red);
+  border-color: var(--red);
+
+  border-radius: 999px;
 }
 
 
@@ -1319,8 +1383,6 @@ img {
   transform:
     translateX(5px);
 }
-
-
 /* ==============================
    FOOTER
 ============================== */
@@ -1379,33 +1441,57 @@ img {
 @media (max-width: 760px) {
 
   html {
-    scroll-padding-top: 68px;
+    scroll-padding-top: 76px;
   }
 
 
   /* HEADER */
 
   .header {
-    height: 68px;
+    height: 76px;
+
+    padding: 0 4vw;
   }
 
   .emblem-image {
-    width: 46px;
-    height: 46px;
+    width: 54px;
+    height: 54px;
   }
 
   .logo-text {
-    font-size: 1rem;
+    font-size: clamp(1.35rem, 5.8vw, 1.75rem);
+  }
+
+  .logo-text small {
+    font-size: 0.68rem;
   }
 
   .menu-button {
     display: block;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
+
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease,
+      visibility 0.35s ease;
+  }
+
+  .header.scrolled .menu-button,
+  .header.menu-active .menu-button {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .navigation {
     position: absolute;
 
-    top: 68px;
+    top: 76px;
     right: 0;
     left: 0;
 
@@ -1415,14 +1501,17 @@ img {
 
     gap: 5px;
 
-    min-height:
-      calc(100vh - 68px);
+    min-height: calc(100vh - 76px);
 
     padding: 30px 6vw;
 
     background: var(--black);
 
     font-size: 1.5rem;
+
+    opacity: 1;
+    visibility: visible;
+    transform: none;
   }
 
   .navigation.open {
@@ -1432,8 +1521,7 @@ img {
   .navigation a {
     padding: 15px 0;
 
-    border-bottom:
-      1px solid #333;
+    border-bottom: 1px solid #333;
   }
 
 
@@ -1444,7 +1532,9 @@ img {
 
     display: block;
 
-    min-height: calc(100svh - 68px);
+    min-height: 100svh;
+
+    padding-top: 76px;
   }
 
   .hero-image {
@@ -1466,10 +1556,10 @@ img {
     background:
       linear-gradient(
         0deg,
-        rgba(0, 0, 0, 0.94) 0%,
-        rgba(0, 0, 0, 0.78) 24%,
-        rgba(0, 0, 0, 0.50) 43%,
-        rgba(0, 0, 0, 0.22) 62%,
+        rgba(0, 0, 0, 0.86) 0%,
+        rgba(0, 0, 0, 0.66) 24%,
+        rgba(0, 0, 0, 0.40) 43%,
+        rgba(0, 0, 0, 0.16) 62%,
         rgba(0, 0, 0, 0.04) 84%,
         rgba(0, 0, 0, 0) 100%
       );
@@ -1483,23 +1573,24 @@ img {
     display: flex;
     flex-direction: column;
 
-    align-items: flex-start;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
 
     width: 100%;
 
-    min-height: calc(100svh - 68px);
+    min-height: calc(100svh - 76px);
 
     padding:
       90px 6vw
       65px;
 
     background: transparent;
+
+    text-align: center;
   }
 
   .hero h1 {
-    font-size:
-      clamp(3.8rem, 16vw, 5.8rem);
+    font-size: clamp(4.3rem, 19vw, 7rem);
 
     line-height: 0.8;
   }
@@ -1512,12 +1603,37 @@ img {
     line-height: 1.8;
   }
 
+  .hero-menu {
+    gap: 7px;
+
+    width: 100%;
+  }
+
+  .hero-menu a {
+    flex: 1 1 calc(50% - 7px);
+
+    min-width: 0;
+
+    padding: 11px 8px;
+
+    font-size: 0.78rem;
+  }
+
+  .hero-menu a:last-child {
+    flex-grow: 0;
+
+    width: calc(50% - 4px);
+  }
+
+  .hero-dots {
+    margin-top: 18px;
+  }
+
 
   /* SECTION */
 
   .section {
-    padding:
-      75px 5vw;
+    padding: 75px 5vw;
   }
 
   .section-title {
@@ -1540,13 +1656,11 @@ img {
   /* NEXT MATCH */
 
   .next-match-card {
-    grid-template-columns:
-      95px 1fr;
+    grid-template-columns: 95px 1fr;
   }
 
   .large-date {
-    padding:
-      25px 10px;
+    padding: 25px 10px;
   }
 
   .large-date strong {
@@ -1554,8 +1668,7 @@ img {
   }
 
   .next-match-information {
-    padding:
-      25px 20px;
+    padding: 25px 20px;
   }
 
   .next-team-area {
@@ -1575,13 +1688,11 @@ img {
   /* SCHEDULE */
 
   .match-card {
-    grid-template-columns:
-      68px 1fr;
+    grid-template-columns: 68px 1fr;
 
     gap: 15px;
 
-    padding:
-      22px 6px;
+    padding: 22px 6px;
   }
 
   .match-status {
@@ -1606,29 +1717,24 @@ img {
   /* RESULT */
 
   .result-summary {
-    grid-template-columns:
-      68px 1fr;
+    grid-template-columns: 68px 1fr;
 
     gap: 15px;
 
-    padding:
-      22px 6px;
+    padding: 22px 6px;
   }
 
   .result-side {
     grid-column: 2;
 
-    justify-content:
-      flex-end;
+    justify-content: flex-end;
   }
 
-  .result-side
-  .result-label {
+  .result-side .result-label {
     display: none;
   }
 
-  .result-card.detail-open
-  .match-detail-inner {
+  .result-card.detail-open .match-detail-inner {
     padding:
       25px 6px
       30px 89px;
@@ -1646,8 +1752,7 @@ img {
   /* PLAYERS */
 
   .players-grid {
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
 
@@ -1662,7 +1767,6 @@ img {
 
     margin-top: 35px;
   }
-
 }
 
 
@@ -1672,8 +1776,20 @@ img {
 
 @media (max-width: 480px) {
 
+  .team-logo {
+    gap: 9px;
+  }
+
+  .logo-text {
+    font-size: 1.28rem;
+  }
+
+  .logo-text small {
+    font-size: 0.6rem;
+  }
+
   .hero h1 {
-    font-size: 3.8rem;
+    font-size: clamp(4rem, 19vw, 5.4rem);
   }
 
   .hero-content {
@@ -1684,10 +1800,6 @@ img {
 
   .hero-description {
     max-width: 100%;
-  }
-
-  .main-button {
-    gap: 35px;
   }
 
   .players-grid {
@@ -1701,7 +1813,6 @@ img {
   .footer-emblem {
     display: none;
   }
-
 }
 
 
@@ -1719,5 +1830,863 @@ img {
   .hero-content {
     animation: none;
   }
+}
 
+
+/* ==============================
+   SEASON SELECT
+============================== */
+
+.season-tabs {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+
+/* シーズン切り替えボタン */
+
+.season-tab {
+  min-width: 165px;
+
+  padding: 13px 22px;
+
+  color: var(--black);
+  background: transparent;
+
+  border: 1px solid var(--black);
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 1rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* マウスを乗せたシーズン */
+
+.season-tab:hover {
+  color: white;
+  background: var(--red);
+
+  border-color: var(--red);
+
+  transform: translateY(-2px);
+}
+
+
+/* 選択中のシーズン */
+
+.season-tab.is-active {
+  color: white;
+  background: var(--red);
+
+  border-color: var(--red);
+}
+
+
+/* キーボード操作時 */
+
+.season-tab:focus-visible {
+  outline:
+    3px solid
+    rgba(225, 6, 0, 0.3);
+
+  outline-offset: 3px;
+}
+
+
+/* ==============================
+   SEASON RESULT
+============================== */
+
+.season-result-summary {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  min-height: 76px;
+
+  margin-bottom: 20px;
+
+  padding:
+    20px
+    24px;
+
+  color: white;
+  background: var(--black);
+
+  border-left: 5px solid var(--red);
+
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.12);
+}
+
+
+/* 2025 SEASON RESULT */
+
+.season-result-summary span {
+  flex-shrink: 0;
+
+  color: var(--red);
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+
+/* リーグ名・順位 */
+
+.season-result-summary strong {
+  font-size:
+    clamp(
+      1rem,
+      2vw,
+      1.35rem
+    );
+
+  line-height: 1.5;
+
+  text-align: right;
+}
+
+
+/* ==============================
+   SEASON RESULT ANIMATION
+============================== */
+
+#resultsContainer {
+  animation:
+    seasonResultFade
+    0.4s ease;
+}
+
+
+@keyframes seasonResultFade {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* ==============================
+   SEASON MOBILE
+============================== */
+
+@media (max-width: 480px) {
+
+  .season-tabs {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    width: 100%;
+  }
+
+
+  .season-tab {
+    min-width: 0;
+
+    width: 100%;
+
+    padding:
+      12px
+      8px;
+
+    font-size: 0.88rem;
+  }
+
+
+  .season-result-summary {
+    display: block;
+
+    min-height: 0;
+
+    padding:
+      17px
+      16px;
+  }
+
+
+  .season-result-summary span,
+  .season-result-summary strong {
+    display: block;
+
+    text-align: left;
+  }
+
+
+  .season-result-summary strong {
+    margin-top: 7px;
+
+    font-size: 1rem;
+  }
+}
+
+
+/* ==============================
+   STATS RANKING
+============================== */
+
+.stats-section {
+  background: #f2f2f2;
+}
+
+
+/* ==============================
+   STATS SEASON BUTTONS
+============================== */
+
+.stats-season-tabs {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-bottom: 28px;
+}
+
+
+.stats-season-tab {
+  min-width: 155px;
+
+  padding:
+    13px
+    20px;
+
+  color: var(--black);
+  background: transparent;
+
+  border: 1px solid var(--black);
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.stats-season-tab:hover,
+.stats-season-tab.is-active {
+  color: white;
+  background: var(--red);
+
+  border-color: var(--red);
+}
+
+
+.stats-season-tab:hover {
+  transform: translateY(-2px);
+}
+
+
+.stats-season-tab:focus-visible {
+  outline:
+    3px solid
+    rgba(225, 6, 0, 0.3);
+
+  outline-offset: 3px;
+}
+
+
+/* ==============================
+   RANKING LAYOUT
+============================== */
+
+.stats-ranking-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 28px;
+}
+
+
+.stats-ranking-block {
+  min-width: 0;
+
+  padding: 25px;
+
+  background: white;
+
+  box-shadow:
+    0 12px 35px
+    rgba(0, 0, 0, 0.09);
+}
+
+
+/* 得点・アシストランキング見出し */
+
+.stats-ranking-block h3 {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin:
+    0
+    0
+    20px;
+
+  padding-bottom: 15px;
+
+  border-bottom: 3px solid var(--red);
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size:
+    clamp(
+      1.4rem,
+      3vw,
+      2rem
+    );
+
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+}
+
+
+.stats-ranking-block h3 span {
+  font-size: 1.45em;
+
+  line-height: 1;
+}
+
+
+/* ==============================
+   RANKING CARD
+============================== */
+
+.stats-card {
+  display: grid;
+
+  grid-template-columns:
+    48px
+    80px
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-height: 104px;
+
+  padding:
+    13px
+    8px;
+
+  border-bottom: 1px solid var(--border);
+
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.stats-card:hover {
+  background: rgba(225, 6, 0, 0.035);
+
+  transform: translateX(3px);
+}
+
+
+.stats-card:last-child {
+  border-bottom: 0;
+}
+
+
+/* ==============================
+   RANK NUMBER
+============================== */
+
+.stats-rank-number {
+  color: var(--black);
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 2.6rem;
+  font-weight: 800;
+
+  line-height: 1;
+
+  text-align: center;
+}
+
+
+/* 1位 */
+
+.stats-rank-1 .stats-rank-number {
+  color: #d5a500;
+}
+
+
+/* 2位 */
+
+.stats-rank-2 .stats-rank-number {
+  color: #8b9298;
+}
+
+
+/* 3位 */
+
+.stats-rank-3 .stats-rank-number {
+  color: #a96332;
+}
+
+
+/* ==============================
+   PLAYER PHOTO
+============================== */
+
+.stats-player-photo {
+  position: relative;
+
+  width: 80px;
+  height: 80px;
+
+  background: #dedede;
+
+  overflow: hidden;
+}
+
+
+.stats-player-photo img {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center top;
+}
+
+
+/* 写真がない場合 */
+
+.stats-player-photo span {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #777;
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  letter-spacing: 0.05em;
+}
+
+
+.stats-player-photo.no-image-active span {
+  display: flex;
+}
+
+
+/* ==============================
+   PLAYER INFORMATION
+============================== */
+
+.stats-player-information {
+  min-width: 0;
+}
+
+
+.stats-player-number {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--red);
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 0.78rem;
+  font-weight: 800;
+
+  letter-spacing: 0.07em;
+}
+
+
+.stats-player-information strong {
+  display: block;
+
+  font-size:
+    clamp(
+      0.95rem,
+      1.8vw,
+      1.18rem
+    );
+
+  line-height: 1.35;
+}
+
+
+/* ==============================
+   GOAL / ASSIST COUNT
+============================== */
+
+.stats-count {
+  display: grid;
+
+  grid-template-columns: auto auto;
+
+  align-items: center;
+
+  column-gap: 7px;
+
+  min-width: 78px;
+
+  text-align: right;
+}
+
+
+/* ボール・スパイクアイコン */
+
+.stats-count > span {
+  grid-row: 1 / 3;
+
+  font-size: 1.45rem;
+
+  line-height: 1;
+}
+
+
+/* 得点数・アシスト数 */
+
+.stats-count strong {
+  color: var(--red);
+
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 2rem;
+  font-weight: 800;
+
+  line-height: 1;
+}
+
+
+/* GOALS / ASSISTS */
+
+.stats-count small {
+  font-family:
+    "Barlow Condensed",
+    sans-serif;
+
+  font-size: 0.62rem;
+  font-weight: 700;
+
+  letter-spacing: 0.05em;
+}
+
+
+/* ==============================
+   NO STATS
+============================== */
+
+.stats-empty {
+  padding:
+    35px
+    15px;
+
+  color: var(--gray);
+
+  text-align: center;
+}
+
+
+/* ==============================
+   STATS ANIMATION
+============================== */
+
+#goalRankingContainer,
+#assistRankingContainer {
+  animation:
+    statsRankingFade
+    0.4s ease;
+}
+
+
+@keyframes statsRankingFade {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* ==============================
+   HEADER MENU ADJUSTMENT
+============================== */
+
+/* メニューが6個になっても収まるように調整 */
+
+.navigation {
+  gap:
+    clamp(
+      10px,
+      1.8vw,
+      30px
+    );
+}
+
+
+.navigation a {
+  white-space: nowrap;
+}
+
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width: 1050px) {
+
+  .stats-ranking-grid {
+    gap: 18px;
+  }
+
+
+  .stats-ranking-block {
+    padding: 20px 16px;
+  }
+
+
+  .stats-card {
+    grid-template-columns:
+      38px
+      68px
+      minmax(0, 1fr)
+      auto;
+
+    gap: 10px;
+  }
+
+
+  .stats-player-photo {
+    width: 68px;
+    height: 68px;
+  }
+
+
+  .stats-rank-number {
+    font-size: 2.2rem;
+  }
+
+
+  .stats-count {
+    min-width: 68px;
+  }
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 760px) {
+
+  .stats-ranking-grid {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+
+  .stats-ranking-block {
+    padding:
+      20px
+      15px;
+  }
+}
+
+
+/* ==============================
+   SMALL MOBILE
+============================== */
+
+@media (max-width: 480px) {
+
+  .stats-season-tabs {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 6px;
+  }
+
+
+  .stats-season-tab {
+    min-width: 0;
+
+    width: 100%;
+
+    padding:
+      11px
+      4px;
+
+    font-size: 0.72rem;
+  }
+
+
+  .stats-ranking-grid {
+    gap: 18px;
+  }
+
+
+  .stats-ranking-block {
+    padding:
+      18px
+      10px;
+  }
+
+
+  .stats-ranking-block h3 {
+    margin-bottom: 12px;
+
+    padding-bottom: 12px;
+
+    font-size: 1.45rem;
+  }
+
+
+  .stats-card {
+    grid-template-columns:
+      30px
+      62px
+      minmax(0, 1fr)
+      auto;
+
+    gap: 8px;
+
+    min-height: 84px;
+
+    padding:
+      11px
+      2px;
+  }
+
+
+  .stats-rank-number {
+    font-size: 1.9rem;
+  }
+
+
+  .stats-player-photo {
+    width: 62px;
+    height: 62px;
+  }
+
+
+  .stats-player-number {
+    font-size: 0.68rem;
+  }
+
+
+  .stats-player-information strong {
+    font-size: 0.88rem;
+  }
+
+
+  .stats-count {
+    min-width: 61px;
+
+    column-gap: 4px;
+  }
+
+
+  .stats-count > span {
+    font-size: 1.05rem;
+  }
+
+
+  .stats-count strong {
+    font-size: 1.55rem;
+  }
+
+
+  .stats-count small {
+    font-size: 0.52rem;
+  }
 }
