@@ -1475,7 +1475,8 @@ const siteData = {
       playImage: "./images/players/21b.jpg",
       details: {
         heatmap: [
-          { area: "C5", intensity: 1 }
+          { area: "C5", intensity: 1 },
+          { area: "C1", intensity: 1 }
         ]
       }
     },
@@ -1607,6 +1608,23 @@ const siteData = {
         heatmap: [
           { area: "C1", intensity: 1 },
           { area: "R1", intensity: 1 }
+        ]
+      }
+    },
+
+    　{
+      number: 99,
+      name: "池田晴俊",
+      englishName: "HARUTOSHI IKEDA",
+      position: "FW",
+      comment: "鶴屋町のメッシ",
+      faceImage: "./images/players/99a.jpg",
+      playImage: "./images/players/99b.jpg",
+      details: {
+        heatmap: [
+          { area: "C1", intensity: 1 },
+          { area: "C2", intensity: 1 },
+          { area: "R2", intensity: 1 }
         ]
       }
     }
