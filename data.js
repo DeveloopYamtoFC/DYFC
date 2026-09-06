@@ -1268,7 +1268,7 @@ const siteData = {
       details: {
         heatmap: [
           { area: "R3", intensity: 1 },
-          { area: "L1", intensity: 1 },
+          { area: "L3", intensity: 1 },
           { area: "R2", intensity: 1 },
           { area: "L2", intensity: 1 }
         ]
@@ -1333,6 +1333,7 @@ const siteData = {
       details: {
         heatmap: [
           { area: "C2", intensity: 1 },
+          { area: "C3", intensity: 1 },
           { area: "R2", intensity: 1 }
         ]
       }
@@ -1422,8 +1423,7 @@ const siteData = {
           { area: "L3", intensity: 1 },
           { area: "C4", intensity: 1 },
           { area: "R3", intensity: 1 },
-          { area: "L2", intensity: 1 },
-          { area: "R2", intensity: 1 }
+          { area: "L2", intensity: 1 }
         ]
       }
     },
@@ -1459,7 +1459,8 @@ const siteData = {
           { area: "C3", intensity: 1 },
           { area: "C2", intensity: 1 },
           { area: "C1", intensity: 1 },
-          { area: "R2", intensity: 1 }
+          { area: "R2", intensity: 1 },
+          { area: "L2", intensity: 1 }
         ]
       }
     },
