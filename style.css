@@ -2977,3 +2977,25 @@ body.player-modal-open { overflow: hidden; }
 .player-card.is-ranking-target {
   animation: player-ranking-target 1.4s ease;
 }
+
+
+/* 監督紹介 */
+.coach-section { margin-top: 64px; padding-top: 36px; border-top: 1px solid #444; }
+.coach-section-title { margin-bottom: 24px; }
+.coach-section-title p { margin: 0 0 6px; color: var(--red); font-family: "Barlow Condensed", sans-serif; font-weight: 800; letter-spacing: .12em; }
+.coach-section-title h3 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); }
+.coach-card { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); background: #151515; }
+.coach-photo { position: relative; aspect-ratio: 3 / 4; display: grid; place-items: center; background: #222; overflow: hidden; }
+.coach-photo span { color: #aaa; font-size: .75rem; letter-spacing: .08em; }
+.coach-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.coach-info { min-width: 0; align-self: center; padding: 32px; overflow-wrap: anywhere; }
+.coach-role { margin: 0 0 12px; color: #ff625c; font-size: .8rem; font-weight: 800; letter-spacing: .08em; }
+.coach-info h4 { margin: 0; font-size: clamp(1.25rem, 3vw, 2rem); }
+.coach-english-name { margin: 8px 0 0; color: #aaa; }
+.coach-comment { margin: 24px 0 0; color: #ddd; line-height: 1.9; white-space: pre-line; }
+@media (max-width: 600px) {
+  .coach-section { margin-top: 44px; padding-top: 28px; }
+  .coach-card { grid-template-columns: 1fr; }
+  .coach-photo { width: 100%; max-width: 300px; justify-self: center; }
+  .coach-info { padding: 24px; }
+}

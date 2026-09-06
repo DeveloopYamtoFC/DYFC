@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   displayResults();
   displayStatsRanking();
   displayPlayers();
+  displayCoach();
   setMenu();
   setScrollHeader();
 });
@@ -2773,3 +2774,48 @@ function showDetailNoImage(image) {
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") closePlayerDetail();
 });
+
+
+// 監督紹介（選手データ・ランキングとは独立して表示）
+function displayCoach() {
+  const container = document.getElementById("coachContainer");
+  if (!container) return;
+  const coach = siteData.coach || {};
+  const card = document.createElement("article");
+  card.className = "coach-card";
+  const photo = document.createElement("div");
+  photo.className = "coach-photo";
+  const placeholder = document.createElement("span");
+  placeholder.textContent = "PHOTO COMING SOON";
+  photo.appendChild(placeholder);
+  if (coach.image) {
+    const img = document.createElement("img");
+    img.alt = coach.name ? coach.name + "監督の写真" : "監督の写真";
+    img.loading = "lazy";
+    img.addEventListener("error", function () { img.remove(); });
+    img.src = coach.image;
+    photo.appendChild(img);
+  }
+  const info = document.createElement("div");
+  info.className = "coach-info";
+  const role = document.createElement("p");
+  role.className = "coach-role";
+  role.textContent = "監督 / HEAD COACH";
+  const name = document.createElement("h4");
+  name.textContent = coach.name || "監督情報は準備中です";
+  info.append(role, name);
+  if (coach.englishName) {
+    const englishName = document.createElement("p");
+    englishName.className = "coach-english-name";
+    englishName.textContent = coach.englishName;
+    info.appendChild(englishName);
+  }
+  if (coach.comment) {
+    const comment = document.createElement("p");
+    comment.className = "coach-comment";
+    comment.textContent = coach.comment;
+    info.appendChild(comment);
+  }
+  card.append(photo, info);
+  container.replaceChildren(card);
+}

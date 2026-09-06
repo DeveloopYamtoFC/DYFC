@@ -1209,6 +1209,14 @@ const siteData = {
   // 選手情報
   // ==============================
 
+  // 監督紹介：名前・英語表記・写真のパス・紹介文を入力してください。
+  coach: {
+    name: "馬着翔",
+    englishName: "SHOU UMAKI",
+    image: "./images/players/umaki.jpg",
+    comment: ""
+  },
+
   players: [
 
     {
